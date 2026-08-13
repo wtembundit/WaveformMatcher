@@ -68,55 +68,13 @@ WaveformMatcher 1.4.5 is a bug-fix and stability release focused on smoother rev
 
 ## Releases
 
-Source code is maintained in this repository.
-
-Release artifacts and the public download page live in this repository.
+This public repository hosts WaveformMatcher releases, documentation, and the download website.
 
 The GitHub Pages release website is published from [`docs/`](docs/).
 
-### Releasing a new version
+## Support
 
-1. Bump `CURRENT_PROJECT_VERSION` and `MARKETING_VERSION` in Xcode build settings
-2. Commit, tag, and push:
-   ```bash
-   git tag vX.X && git push origin main && git push origin vX.X
-   ```
-3. Build a signed Release app and DMG with the release script:
-   ```bash
-   ./scripts/build_release_dmg.sh
-   ```
-   This script builds from the Xcode Release configuration with code signing enabled so the exported app keeps its sandbox entitlements.
-4. Refresh the public docs and user manual PDF:
-   ```bash
-   python3 scripts/generate_user_manual_pdf.py
-   ```
-5. Create the GitHub release in this repository and upload the generated DMG:
-   ```bash
-   gh release create vX.X WaveformMatcher-X.X.dmg \
-     --title "Version X.X"
-   ```
-
-## Contributing
-
-Contributions are welcome.
-
-Recommended workflow:
-
-1. Fork the repo and create a focused branch
-2. Build locally with Xcode or:
-   ```bash
-   xcodebuild -project WaveformMatcher.xcodeproj -scheme WaveformMatcher -sdk macosx build CODE_SIGNING_ALLOWED=NO
-   ```
-3. Keep large local assets out of git:
-   - `ffprobe`
-   - `rtdetr-*.pt`
-   - local datasets and generated release artifacts
-4. If you touch user-facing behavior, update:
-   - localization strings
-   - user manual source in `docs/`
-   - website assets in `docs/` when relevant
-   - `CHANGELOG.md`
-5. Open a pull request with a short testing note
+Report issues or request features from the [Issues page](https://github.com/wtembundit/WaveformMatcher/issues).
 
 ## Dependencies
 

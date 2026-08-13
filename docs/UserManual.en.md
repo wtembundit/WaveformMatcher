@@ -485,11 +485,10 @@ Feature for automatic clip speed adjustment when shooting frame rate differs fro
 
 Auto Speed works when clips have **Record Frame Rate** metadata from:
 
-**1. Shot Notes X:**
-- macOS app for recording production metadata
-- Records: Scene, Take, Camera, Lens, Frame Rate, etc.
-- Writes metadata directly to Final Cut Pro clips
-- Download: [Shot Notes X on App Store](https://apps.apple.com/app/shot-notes-x/id853468135)
+**1. Compatible Final Cut Pro metadata:**
+- Works with Record/Sensor FPS fields already present in the FCPXML
+- Can read compatible metadata written by production logging tools, including Shot Notes X
+- The app treats these fields as imported metadata, not as a required dependency
 
 **2. Camera Meta**
 - Metadata embedded in camera files
@@ -610,7 +609,7 @@ The complete searchable list is available from **Help → Keyboard Shortcuts…*
 - **Download WaveformMatcher:**  
   [wtembundit.github.io/WaveformMatcher](https://wtembundit.github.io/WaveformMatcher/)
 
-- **GitHub (Source Code):**  
+- **GitHub (Releases & Docs):**  
   [github.com/wtembundit/WaveformMatcher](https://github.com/wtembundit/WaveformMatcher)
 
 - **Changelog:**  
@@ -618,10 +617,8 @@ The complete searchable list is available from **Help → Keyboard Shortcuts…*
 
 ### Related Tools
 
-**Shot Notes X**  
-macOS app for recording production metadata (Scene, Take, Camera, Lens, Frame Rate) and writing to Final Cut Pro clips
-- **Download:** [App Store](https://apps.apple.com/app/shot-notes-x/id853468135)
-- **Best For:** Users wanting automated workflow between set and edit suite
+**Shot Notes X compatibility**  
+WaveformMatcher can read compatible Scene, Take, Camera, Lens, and Record FPS metadata when it is already present in the imported FCPXML.
 
 **FFmpeg / FFprobe**  
 Tools for video and audio processing (used for reading timecode from raw files)
@@ -634,9 +631,8 @@ Tools for video and audio processing (used for reading timecode from raw files)
 **Report Issues / Request Features:**
 - Create Issue on GitHub: [github.com/wtembundit/WaveformMatcher/issues](https://github.com/wtembundit/WaveformMatcher/issues)
 
-**Contributing:**
-- Fork repo → Create branch → Develop → Pull Request
-- Read developer guide in README.md
+**Release repository:**
+- This public repository hosts releases, documentation, and the download website.
 
 ---
 
@@ -676,7 +672,7 @@ Timecode is a system for assigning "time addresses" (Hours:Minutes:Seconds:Frame
    - Wait 1-2 seconds after clap before action
 
 3. **Record Metadata:**
-   - Use Shot Notes X to log Scene/Take/Camera
+   - Log Scene/Take/Camera in the production tool of your choice
    - Note Frame Rate used for shooting
    - Sync timecode if possible
 

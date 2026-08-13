@@ -485,11 +485,10 @@
 
 Auto Speed จะทำงานเมื่อคลิปมี metadata ของ **Record Frame Rate** จาก:
 
-**1. Shot Notes X:**
-- แอป macOS สำหรับบันทึก metadata กองถ่าย
-- บันทึก: Scene, Take, Camera, Lens, Frame Rate, ฯลฯ
-- เขียน metadata ลงในคลิป Final Cut Pro โดยตรง
-- ดาวน์โหลด: [Shot Notes X บน App Store](https://apps.apple.com/th/app/shot-notes-x/id853468135?mt=12)
+**1. metadata ที่เข้ากันได้กับ Final Cut Pro:**
+- ใช้ค่า Record/Sensor FPS ที่มีอยู่ใน FCPXML
+- อ่าน metadata ที่เขียนมาจากเครื่องมือบันทึกข้อมูลกองถ่ายที่เข้ากันได้ รวมถึง Shot Notes X
+- WaveformMatcher ถือข้อมูลเหล่านี้เป็น metadata ที่นำเข้า ไม่ใช่ dependency ที่จำเป็นต้องมี
 
 **2. Camera Meta**
 - metadata ที่ฝังมากับไฟล์จากกล้อง
@@ -610,7 +609,7 @@ Auto Speed จะทำงานเมื่อคลิปมี metadata ข�
 - **ดาวน์โหลด WaveformMatcher:**  
   [wtembundit.github.io/WaveformMatcher](https://wtembundit.github.io/WaveformMatcher/)
 
-- **GitHub (Source Code):**  
+- **GitHub (Releases & Docs):**  
   [github.com/wtembundit/WaveformMatcher](https://github.com/wtembundit/WaveformMatcher)
 
 - **Changelog:**  
@@ -618,10 +617,8 @@ Auto Speed จะทำงานเมื่อคลิปมี metadata ข�
 
 ### เครื่องมือที่เกี่ยวข้อง
 
-**Shot Notes X**  
-แอป macOS สำหรับบันทึก metadata กองถ่าย (Scene, Take, Camera, Lens, Frame Rate) และเขียนลงในคลิป Final Cut Pro
-- **ดาวน์โหลด:** [App Store](https://apps.apple.com/th/app/shot-notes-x/id853468135?mt=12)
-- **เหมาะสำหรับ:** ผู้ที่ต้องการ automate workflow ระหว่างกองถ่ายและห้องตัดต่อ
+**การรองรับ Shot Notes X**  
+WaveformMatcher สามารถอ่าน Scene, Take, Camera, Lens และ Record FPS ที่เข้ากันได้เมื่อข้อมูลเหล่านี้มีอยู่ใน FCPXML ที่นำเข้า
 
 **FFmpeg / FFprobe**  
 เครื่องมือสำหรับประมวลผลวิดีโอและเสียง (ใช้สำหรับอ่าน timecode จากไฟล์ raw)
@@ -634,9 +631,8 @@ Auto Speed จะทำงานเมื่อคลิปมี metadata ข�
 **รายงานปัญหา / ขอฟีเจอร์ใหม่:**
 - สร้าง Issue บน GitHub: [github.com/wtembundit/WaveformMatcher/issues](https://github.com/wtembundit/WaveformMatcher/issues)
 
-**Contributing:**
-- Fork repo → สร้าง branch → พัฒนา → Pull Request
-- อ่านคู่มือสำหรับ developers ใน README.md
+**Release repository:**
+- repository public นี้ใช้สำหรับ release, เอกสาร และหน้าเว็บดาวน์โหลด
 
 ---
 
@@ -676,7 +672,7 @@ Timecode คือระบบการกำหนด "ที่อยู่เ
    - รอ 1-2 วินาทีหลังก่อนเริ่มถ่าย
 
 3. **บันทึก Metadata:**
-   - ใช้ Shot Notes X บันทึก Scene/Take/Camera
+   - บันทึก Scene/Take/Camera ด้วยเครื่องมือ production logging ที่ทีมใช้อยู่
    - เขียน Frame Rate ที่ใช้ถ่าย
    - Sync timecode ถ้าเป็นไปได้
 
