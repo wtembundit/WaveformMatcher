@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+
+# Local build/test artifacts
+build/
+DerivedData/
+reports/
+tmp/
+*.dmg
+*.zip
+
