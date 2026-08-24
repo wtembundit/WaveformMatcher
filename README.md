@@ -84,6 +84,3 @@ Report issues or request features from the [Issues page](https://github.com/wtem
 ## Acknowledgements
 
 - [FFmpeg / ffprobe](https://ffmpeg.org) — audio and video processing; licensed under LGPL 2.1+
-
----
-*Built with the assistance of [Claude Code](https://claude.ai/code) and Codex*
