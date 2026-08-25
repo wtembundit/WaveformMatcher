@@ -29,6 +29,7 @@
 
 ### Fixed
 
+- Restored the lightweight update download gateway so existing in-app update prompts resolve the latest notarized DMG instead of opening a removed website
 - Improved metadata table focus, rectangular selection, keyboard navigation, Thai-layout shortcuts, column resizing, scroll performance, and minimum-window behavior
 - Fixed CSV parsing for CRLF, quoted values, empty trailing fields, duplicate headers, and unknown columns
 - Fixed metadata import matching so missing or ambiguous filenames are reported and skipped rather than silently applied to the wrong clip

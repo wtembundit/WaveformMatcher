@@ -65,6 +65,8 @@ WaveformMatcher 1.4.6 is a major workflow update that adds metadata preparation 
 
 This public repository hosts WaveformMatcher releases and documentation.
 
+[Download the latest version](https://wtembundit.github.io/WaveformMatcher/?manual=1)
+
 ## Support
 
 Report issues or request features from the [Issues page](https://github.com/wtembundit/WaveformMatcher/issues).
