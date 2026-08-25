@@ -9,9 +9,11 @@
 4. [การติดตั้ง](#4-การติดตั้ง)
 5. [ภาพรวมหน้าจอ](#5-ภาพรวมหน้าจอ)
 6. [Workflow มาตรฐาน](#6-workflow-มาตรฐาน)
-7. [ฟีเจอร์เสริม](#7-ฟีเจอร์เสริม)
-8. [Keyboard Shortcuts](#8-keyboard-shortcuts)
-9. [ลิงก์และทรัพยากร](#9-ลิงก์และทรัพยากร)
+7. [Metadata View](#7-metadata-view)
+8. [Timeline Detail](#8-timeline-detail)
+9. [ฟีเจอร์เสริม](#9-ฟีเจอร์เสริม)
+10. [Keyboard Shortcuts](#10-keyboard-shortcuts)
+11. [ลิงก์และทรัพยากร](#11-ลิงก์และทรัพยากร)
 
 ---
 
@@ -23,6 +25,9 @@
 - วิเคราะห์คลื่นเสียง (Audio Waveform) จากวิดีโอและไฟล์ WAV
 - หาจุดที่ตรงกันอัตโนมัติด้วยเทคโนโลยี Audio Fingerprinting
 - ใช้ Timecode สำหรับการจับคู่เมื่อมีข้อมูล Timecode ที่ถูกต้อง
+- ตรวจและแก้ metadata กองถ่ายในตารางแบบ spreadsheet
+- นำเข้า metadata จาก CSV, XLSX และ PDF โดยประมวลผล PDF/OCR ในเครื่อง
+- ปรับ sync offset รายคลิปใน Timeline Detail ที่แสดง waveform ตรงสเกลเดียวกัน
 - ส่งออกไฟล์ FCPXML ที่พร้อมนำเข้า Final Cut Pro ทันที
 
 ---
@@ -65,27 +70,11 @@
 
 ## 4. การติดตั้ง
 
-### ⚠️ สำคัญ: แอปยังไม่ผ่านการ Notarize จาก Apple
+WaveformMatcher 1.4.6 เป็นต้นไปเซ็นด้วย Developer ID และผ่านการ Notarize จาก Apple แล้ว
 
-เนื่องจาก WaveformMatcher เป็นแอปที่พัฒนาโดยอิสระและยังไม่ได้ส่งให้ Apple ตรวจสอบ (Notarize) macOS Gatekeeper จะบล็อกการเปิดแอปครั้งแรก
-
-#### วิธีแก้ทางเลือกที่ 1 — คลิกขวาเปิด (แนะนำ)
-
-1. ใน Finder ให้ **คลิกขวา** ที่ `WaveformMatcher.app`
-2. เลือก **Open** จากเมนู
-3. ในกล่องข้อความที่ขึ้นมา กด **Open** อีกครั้ง
-4. ถ้ายังติดบล็อก:
-   - ไปที่ **System Settings → Privacy & Security**
-   - กด **Open Anyway**
-
-#### วิธีแก้ทางเลือกที่ 2 — ใช้ Terminal
-
-1. เปิด **Terminal**
-2. พิมพ์คำสั่ง (แก้ไข path ให้ตรงกับที่วางแอป):
-   ```bash
-   xattr -dr com.apple.quarantine /Applications/WaveformMatcher.app
-   ```
-3. เปิดแอปได้ตามปกติ
+1. เปิดไฟล์ DMG ที่ดาวน์โหลดมา
+2. ลาก `WaveformMatcher.app` ไปยังโฟลเดอร์ **Applications**
+3. เปิด WaveformMatcher จาก Applications ได้ตามปกติ
 
 ---
 
@@ -101,12 +90,14 @@
 - **FCPXML**: แสดงไฟล์ที่โหลดอยู่
 - **Media Folder**: โฟลเดอร์ที่เก็บไฟล์ WAV
 - **Matching Settings**: ตั้งค่าโหมดการซิงค์
-- **Export Settings**: ตั้งค่าการส่งออก
+- **Metadata**: เปิด Metadata View และเลือก source สำหรับ preview/export
+- **Output Setup**: รูปแบบ FCPXML การตั้งชื่อ format และตัวเลือกส่งออก
 
 #### พื้นที่หลัก (Main Area)
-- **ตารางคลิป**: แสดงชื่อไฟล์วิดีโอต้นฉบับและเรียง Filename, Scene, Speed หรือ Status ได้ทั้งสองทิศทาง
-- **Waveform Viewer**: แสดงคลื่นเสียงของ WAV แบบหลายช่อง
-- **Video Player**: เล่นวิดีโอพร้อม Seek Bar
+- **Sync View**: Video/Audio viewer, inspector, Timeline Detail และตารางผล sync
+- **Metadata View**: ตารางแก้ metadata และเครื่องมือ Import/Export
+- **สลับ View**: `Cmd+1` เปิด Sync View และ `Cmd+2` เปิด Metadata View
+- **Table Scale**: ปรับขนาดตารางร่วมกันทั้งสอง view
 
 ---
 
@@ -301,7 +292,18 @@
 
 **หมายเหตุ:** Marker guide เป็นตัวช่วยที่แก้ไขไม่ได้จนกว่าจะกด **Use Marker Pair**
 
-### ขั้นตอนที่ 7 — ตั้งค่า Export
+### ขั้นตอนที่ 7 — ตรวจและแก้ Metadata
+
+1. เปิด **Metadata View** จาก sidebar, toolbar หรือกด `Cmd+2`
+2. เลือก **Source Metadata** โดย Video เป็นจุดเริ่มต้นที่ปลอดภัย ส่วนโหมดผสมจะเติมช่องว่างจาก matched audio
+3. ตรวจ Scene, Take, Reel, Camera Name, Angle, Note, Good Take, Speed และ Rec FPS
+4. แก้ทีละ cell หรือใช้เครื่องมือ spreadsheet กับหลายคลิปพร้อมกัน
+5. ถ้ามี production report ให้เลือก **Import/Export → Import Metadata…** แล้วตรวจ mapping ก่อน Apply
+6. กลับ Sync View ด้วย `Cmd+1` เมื่อต้องแก้ผล sync
+
+ค่าที่เห็นล่าสุดใน Metadata View คือค่าที่ FCPXML export จะนำไปใช้ การซ่อน column ไม่ได้ลบข้อมูล และ custom metadata ที่เข้ากันได้จะยัง round-trip เว้นแต่ user จะ override เอง
+
+### ขั้นตอนที่ 8 — ตั้งค่า Export
 
 กลับมาที่แผงซ้าย ส่วน **Export Settings**:
 
@@ -334,9 +336,14 @@
 
 #### ตัวเลือกเพิ่มเติม
 
-**Metadata From:** เลือกว่าจะดึง metadata จากไหน
-- **Video Clip**: ใช้ metadata จากไฟล์วิดีโอ (Scene, Take, Camera Angle ฯลฯ)
-- **Audio (WAV)**: ใช้ metadata จากไฟล์ WAV
+**Clip Name:** เลือกที่มาของชื่อคลิป
+- **Video**: ชื่อไฟล์วิดีโอต้นฉบับ
+- **Audio**: ชื่อ production audio ที่ match
+- **Metadata**: สร้างชื่อจาก template และ fallback เป็นชื่อวิดีโอถ้าไม่มี metadata ที่ใช้ได้
+
+**Metadata Template:** ค่าเริ่มต้นคือ `Scene_Take_Angle` โดยจะข้ามช่องว่างและ separator ที่ไม่จำเป็น Custom metadata ที่ user สร้างสามารถเพิ่มใน template ได้
+
+**MC Angle Name:** สำหรับ Multicam เลือก Filename, Camera Angle หรือ Camera Name
 
 **Spatial Conform:** (เมื่อความละเอียดคลิปไม่ตรงกับ output)
 - **Fit**: ย่อคลิปให้ fit ใน frame โดยเห็นทั้งภาพ (อาจมีแถบดำ)
@@ -355,7 +362,7 @@
 - คำนวณความเร็วอัตโนมัติ: `Speed = Record FPS ÷ Timeline FPS`
 - ตัวอย่าง: ถ่าย 48fps, timeline 24fps = ความเร็ว 200%
 
-### ขั้นตอนที่ 8 — Export และ Import กลับ Final Cut Pro
+### ขั้นตอนที่ 9 — Export และ Import กลับ Final Cut Pro
 
 1. **กดปุ่ม Export:**
    - กด **Export FCPXML Event** (แผงซ้ายล่าง)
@@ -385,9 +392,131 @@
 
 ---
 
-## 7. ฟีเจอร์เสริม
+## 7. Metadata View
 
-### 7.1 Detect Slate (Experimental) ⚠️
+Metadata View คือขั้นตอนเตรียมข้อมูลหลัง sync และก่อน export FCPXML โดยหนึ่งแถวแทนผลของวิดีโอหนึ่งคลิป และค่าที่ resolve แล้วในตารางเป็นแหล่งข้อมูลกลางสำหรับ export
+
+### 7.1 Source Metadata
+
+เมนู **Source Metadata** กำหนดค่าเริ่มต้นในตาราง:
+
+- **Video**: ใช้ metadata ฝั่งวิดีโอ
+- **Audio**: ใช้ metadata จาก matched audio เมื่อมี
+- **Video + Audio**: เริ่มจากวิดีโอ แล้วเติมช่องว่างจากเสียง
+- **Audio + Video**: เริ่มจากเสียง แล้วเติมช่องว่างจากวิดีโอ
+
+การเปลี่ยน source ไม่ลบ manual edit ช่องที่ user แก้เองจะคงเป็น override จนกด reset
+
+### 7.2 Built-in และ Custom Columns
+
+ช่องที่แก้ได้ประกอบด้วย Scene, Take, Reel, Camera Name, Angle, Note, Good Take, Speed และ Rec FPS
+
+- **Note** ส่งออกเป็น Note ของ Final Cut Pro
+- **Good Take** ส่งออกเป็น Favorite ถ้า Multicam มีคลิปใดคลิปหนึ่งเป็น Good Take สถานะนี้จะถูกเก็บใน multicam ที่ export
+- **Rec FPS** ใช้ Record/Sensor FPS ก่อน ถ้าไม่มีจะเริ่มจาก frame rate ของคลิป
+- **Speed** ใช้ Auto หรือ override เองรายคลิปได้
+- **+ Column** ใช้ show/hide custom metadata จาก FCPXML และสร้างหรือลบ custom column ของ WFM
+
+Column ที่ซ่อนยังอยู่ในโปรเจกต์และ round-trip ต่อได้ การลบ custom column ที่สร้างใน WFM จะลบ field นั้นหลังยืนยัน
+
+### 7.3 การแก้ตารางแบบ Spreadsheet
+
+- คลิกหนึ่งครั้งเพื่อเลือก cell; ดับเบิลคลิกหรือกด `Return` เพื่อแก้ข้อความ
+- ลากผ่าน cell หรือ Shift-click เพื่อเลือกเป็นสี่เหลี่ยม
+- Copy/Paste แบบ tab-separated ระหว่าง WaveformMatcher กับโปรแกรม spreadsheet ได้ โดยเลือกแค่ cell ซ้ายบนก่อน paste ทั้งก้อน
+- **Fill** คัดลอกค่าลงตาม selection และลาก fill handle เพื่อ fill ต่อเนื่อง
+- **Number** สร้างลำดับเลขตามแถวที่เลือก
+- **Clear** ล้าง override ที่เลือก; **Reset Selected** กลับไปใช้ค่าจาก source
+- **Find** ค้นหาใน Selection, Active Column หรือ Visible Columns พร้อม Match Case และ Whole Cell
+- Cell edit และการแก้โครงสร้างตารางรองรับ Undo/Redo
+- ลากเส้นแบ่งหัว column เพื่อ resize และ scroll แนวนอนเมื่อ column กว้างเกินหน้าต่าง
+
+### 7.4 Auto Speed และ Rec FPS
+
+Auto Speed คำนวณ `Rec FPS ÷ Timeline FPS × 100`
+
+- Speed สีฟ้าคือค่า Auto รวมถึง `100%`
+- Speed หรือ Rec FPS สีส้มคือ manual override
+- การแก้ Rec FPS จะคำนวณ Speed ใหม่เฉพาะแถวที่ยังอยู่ใน Auto
+- การแก้ Speed เองจะปลด Auto เฉพาะคลิปนั้น คลิปอื่นยัง Auto ต่อ
+- กด **Auto Speed** เพื่อคำนวณใหม่ให้ selection หรือ visible rows ถ้าไม่ได้เลือกอะไร
+
+### 7.5 Synced Preview
+
+- กด `Space` เพื่อเปิด/ปิด in-app synced preview ของแถว active
+- Preview ใช้ offset ที่ WFM บันทึกและทำ stereo monitor mix สำหรับ WAV หลาย channel โดยไฟล์ export ยังเก็บ multichannel ต้นฉบับ
+- ใช้ปุ่มลูกศรเลื่อนคลิปใน visible rows และ preview จะตาม active row
+- Scrub bar แสดง FCP marker, manual sync point, slate guide และ slate visible range เมื่อมี
+- ใช้ `Option+Space` เมื่อต้องการดู raw file ด้วย Quick Look เท่านั้น
+
+### 7.6 Import Metadata
+
+เลือก **Import/Export → Import Metadata…** หรือกด `Option+Cmd+I`
+
+ไฟล์ที่รองรับ:
+- **CSV**: เหมาะกับ interchange และ round-trip
+- **XLSX**: เลือก worksheet และ header row ได้เมื่อไฟล์มีหลายตารางหรือมีแถวหัวเรื่อง
+- **PDF**: สร้างโครงตารางในเครื่องและใช้ Apple Vision OCR เมื่อ text layer ไม่มีหรือไม่น่าเชื่อถือ
+
+ขั้นตอน:
+1. เลือกไฟล์ source
+2. สำหรับ XLSX/PDF เลือก table หรือ header row ที่ถูกต้องเมื่อระบบถาม
+3. เลือก matching rule โดยควรใช้ Filename/Path แบบ exact ก่อน ส่วน report ที่มีโครงสร้างอาจใช้ Reel + Clip หรือ filename token
+4. Map source column ไป field ที่มีอยู่, Ignore หรือสร้าง custom field ใหม่
+5. ตรวจจำนวน matched, needs review และ skipped ก่อน Apply
+6. ปล่อย **Overwrite manual edits** เป็นปิด เว้นแต่ต้องการให้ report ทับงาน manual เดิม
+7. กด Apply Import โดยแถวที่หาไม่เจอหรือกำกวมจะถูกข้าม ไม่เดาสุ่ม
+
+การอ่าน PDF ทำในเครื่องทั้งหมด ควรตรวจผล OCR โดยเฉพาะภาษาไทยและ report ที่มี merged cell ก่อน export คำเตือน review เป็นเพียงตัวช่วยและจะไม่แก้คลิปจนกด **Apply Import**
+
+### 7.7 Export Metadata
+
+เลือก **Import/Export → Export Metadata…** หรือกด `Option+Cmd+E`
+
+- Row scope: All Project Rows, Current Filter/Search หรือ Selected Rows
+- Column scope: All Metadata Columns หรือ Visible Columns
+- ปัจจุบันส่งออกเป็น CSV สำหรับทำงานต่อใน spreadsheet หรือ production report workflow
+
+### 7.8 Reel Helper และ Metadata Naming
+
+เมนู **Reel** เติมค่าให้ visible rows จาก Embedded Reel, Source Filename หรือ Folder Name ส่วน **Custom Value…** ใช้กับ selection/active row
+
+เมื่อเลือก **Clip Name → Metadata** ระบบจะต่อชื่อจาก metadata ตามลำดับและตัด separator ที่ไม่มีค่าออก Template เริ่มต้นคือ `Scene_Take_Angle`; ถ้าไม่มีค่าที่ใช้ได้จะ fallback เป็นชื่อวิดีโอ ส่วน speed duplicate ใช้ชื่อฐานเดียวกันแล้วเติม FPS ต่อท้าย
+
+---
+
+## 8. Timeline Detail
+
+Timeline Detail คือหน้าปรับ sync รายคลิปใน Sync View เปิดเป็นค่าเริ่มต้นตาม active clip และเปิดซ้ำได้ด้วยการดับเบิลคลิก filename
+
+### 8.1 การอ่าน Timeline
+
+- Lane **Video** สีฟ้าแสดง scratch audio ที่ mix จากกล้อง
+- Lane **Audio Match** สีเขียวแสดง production audio ตาม offset ที่บันทึก
+- ทั้งสอง lane ใช้ ruler และ playhead เดียวกัน จึงเทียบ clap transient ได้ตรงๆ
+- FCP marker, manual sync point, slate range และ slate guide ยังคงเป็น reference
+- คลิก Video lane เพื่อ focus video; คลิก Audio Match เพื่อ focus audio โดย lane ที่ active จะมีกรอบ
+
+### 8.2 การปรับ Sync
+
+- ลาก Audio Match ซ้าย/ขวาเพื่อเปลี่ยน offset
+- กด `,` หรือ `.` เพื่อขยับหนึ่ง timeline frame; กด Shift ร่วมเพื่อขยับสิบ frame
+- ใช้ `Cmd++` / `Cmd+-` เพื่อ zoom และ `Shift+Z` เพื่อ fit ทั้งช่วง
+- ปุ่ม reset offset จะคืน Audio Match ไปที่ offset ศูนย์
+- หนึ่ง drag นับเป็น Undo หนึ่งครั้ง และ project จะ dirty เมื่อค่าหลังจบ drag เปลี่ยนจริง
+- การลาก/nudge ที่ commit หรือ lock marker/slate pair ด้วยมือจะแสดงสถานะ **Manual** สีส้ม แต่ยังถือว่า matched และ export ได้
+
+### 8.3 Pair-scoped Resync
+
+เมนู Resync ที่หัว Timeline ใช้ **Waveform** หรือ **Timecode** ใหม่เฉพาะ Video และ Audio Match ที่แสดงอยู่ ไม่ค้น WAV อื่นในโปรเจกต์ และ undo ผลที่แทนได้
+
+Auto Lock เปิดเป็นค่าเริ่มต้น ปิดเมื่อต้องการวางและตรวจทั้งสอง sync point ก่อนกด **Lock Sync** เอง
+
+---
+
+## 9. ฟีเจอร์เสริม
+
+### 9.1 Detect Slate (Experimental) ⚠️
 
 **Slate (กระดานกำกับช็อต) คืออะไร?**
 
@@ -461,7 +590,7 @@
 
 **คำแนะนำ:** ใช้ Detect Slate เป็น **จุดเริ่มต้น** เท่านั้น — ตรวจสอบและปรับแต่งด้วย Manual Sync เสมอ
 
-### 7.2 Auto Speed
+### 9.2 Auto Speed
 
 **Auto Speed คืออะไร?**
 
@@ -511,7 +640,7 @@ Auto Speed จะทำงานเมื่อคลิปมี metadata ข�
    - ความเร็วจะถูกบันทึกใน FCPXML
    - เมื่อ import เข้า Final Cut Pro คลิปจะเล่นด้วยความเร็วที่คำนวณ
 
-### 7.3 Project Files (.wmproj)
+### 9.3 Project Files (.wmproj)
 
 **.wmproj คืออะไร?**
 
@@ -546,7 +675,7 @@ Auto Speed จะทำงานเมื่อคลิปมี metadata ข�
 
 ---
 
-## 8. Keyboard Shortcuts
+## 10. Keyboard Shortcuts
 
 ### การทำงานทั่วไป
 
@@ -556,6 +685,10 @@ Auto Speed จะทำงานเมื่อคลิปมี metadata ข�
 | Export FCPXML | `Cmd+E` |
 | Save project | `Cmd+S` |
 | Open project | `Cmd+O` |
+| Sync View / Metadata View | `Cmd+1` / `Cmd+2` |
+| แสดง/ซ่อน Sidebar | `Cmd+3` |
+| Focus ช่อง Search | `Option+F` |
+| Import / Export Metadata | `Option+Cmd+I` / `Option+Cmd+E` |
 
 ### การเล่นวิดีโอ
 
@@ -598,18 +731,45 @@ Auto Speed จะทำงานเมื่อคลิปมี metadata ข�
 | Next Clip | `↓` (Down Arrow) |
 | Previous Clip | `↑` (Up Arrow) |
 
+### Sync และ Filter
+
+| Action | Shortcut |
+|--------|----------|
+| โหมด Waveform / Timecode / Manual | `Option+1` / `Option+2` / `Option+3` |
+| เริ่ม sync ตามโหมดที่เลือก | `Option+S` |
+| All / Matched / Review / Unmatched | `Option+4` / `Option+5` / `Option+6` / `Option+7` |
+
+### Metadata Table
+
+| Action | Shortcut |
+|--------|----------|
+| Copy / Paste cell ที่เลือก | `Option+Cmd+C` / `Option+Cmd+V` |
+| Fill down / Auto-number | `Option+D` / `Option+N` |
+| Clear / Reset selected | `Cmd+Delete` / `Cmd+R` |
+| Find & Replace | `Cmd+F` |
+| เปิด/ปิด synced preview | `Space` |
+| Quick Look raw media | `Option+Space` |
+| Table zoom เข้า / ออก / reset | `Option++` / `Option+-` / `Option+0` |
+
+### Timeline Detail
+
+| Action | Shortcut |
+|--------|----------|
+| Nudge Audio Match หนึ่ง frame | `,` / `.` |
+| Nudge Audio Match สิบ frame | `Shift+,` / `Shift+.` |
+| Timeline zoom เข้า / ออก | `Cmd++` / `Cmd+-` |
+| Fit timeline | `Shift+Z` |
+| ปิด Timeline Detail | `Esc` |
+
 ดูรายการทั้งหมดแบบค้นหาได้จาก **Help → Keyboard Shortcuts…**
 
 ---
 
-## 9. ลิงก์และทรัพยากร
+## 11. ลิงก์และทรัพยากร
 
 ### ดาวน์โหลดและเอกสาร
 
-- **ดาวน์โหลด WaveformMatcher:**  
-  [wtembundit.github.io/WaveformMatcher](https://wtembundit.github.io/WaveformMatcher/)
-
-- **GitHub (Releases & Docs):**  
+- **ดาวน์โหลด WaveformMatcher / Releases & Docs:**
   [github.com/wtembundit/WaveformMatcher](https://github.com/wtembundit/WaveformMatcher)
 
 - **Changelog:**  
@@ -632,7 +792,7 @@ WaveformMatcher สามารถอ่าน Scene, Take, Camera, Lens แล�
 - สร้าง Issue บน GitHub: [github.com/wtembundit/WaveformMatcher/issues](https://github.com/wtembundit/WaveformMatcher/issues)
 
 **Release repository:**
-- repository public นี้ใช้สำหรับ release, เอกสาร และหน้าเว็บดาวน์โหลด
+- repository public นี้ใช้สำหรับ release และเอกสาร
 
 ---
 
@@ -693,6 +853,6 @@ Timecode คือระบบการกำหนด "ที่อยู่เ
 
 ---
 
-**WaveformMatcher v1.4.5**
+**WaveformMatcher v1.4.6**
 สร้างด้วยความช่วยเหลือของ Claude Code และ Codex
-[รายงานปัญหา](https://github.com/wtembundit/WaveformMatcher/issues) | [ดาวน์โหลด](https://wtembundit.github.io/WaveformMatcher/)
+[รายงานปัญหาและดาวน์โหลด](https://github.com/wtembundit/WaveformMatcher)

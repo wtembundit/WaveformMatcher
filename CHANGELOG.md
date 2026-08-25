@@ -1,5 +1,49 @@
 # Changelog
 
+## 1.4.6
+
+### Added
+
+- Added Metadata View, an editable spreadsheet-style workspace for reviewing and preparing clip metadata before FCPXML export
+- Added editable Scene, Take, Reel, Camera Name, Angle, Note, Good Take, Speed, and Rec FPS fields, plus detected and user-created custom metadata columns
+- Added rectangular selection, multi-row copy/paste, fill down, drag fill, auto-number, clear/reset, undo/redo, resizable columns, table zoom, and scoped Find & Replace
+- Added metadata source policies for Video, Audio, Video + Audio, and Audio + Video, with per-cell manual overrides preserved in `.wmproj`
+- Added metadata-based clip naming with a `Scene_Take_Angle` template and fallback to the source video filename when metadata is incomplete or absent
+- Added Metadata Import/Export. CSV supports scoped export and round-trip import; CSV, XLSX, and PDF reports use a shared mapping and review workflow
+- Added Smart Import matching by filename, path, filename tokens, Reel + Clip, and report-specific clip ranges while skipping ambiguous rows instead of guessing
+- Added PDF table reconstruction and local Apple Vision OCR fallback for difficult reports, including Thai-text review warnings
+- Added Reel helpers for embedded reel, source filename, folder name, and a custom value applied to the active selection
+- Added an in-app synced metadata preview with aligned production audio, multichannel stereo monitoring, marker/slate guides, and keyboard navigation
+- Added Timeline Detail to Sync View with camera/audio waveforms on one time ruler, direct Audio Match dragging, frame nudging, zoom/pan/fit, offset reset, and undo/redo
+- Added pair-scoped Resync with Waveform or Timecode for the active Timeline Detail clip without searching unrelated project audio
+- Added a distinct orange Manual status for user-adjusted or manually locked sync results
+
+### Changed
+
+- Reorganized the working flow around Sync View, Metadata View, Output Setup, and FCPXML export
+- Auto Speed now works with editable Rec FPS, distinguishes automatic and manual values visually, and preserves explicit per-clip speed overrides
+- Notes export as Final Cut Pro notes, Good Take exports as a Favorite rating, and metadata edits now flow consistently to sync clips, multicam clips, unsynced clips, and speed duplicates
+- The clip table now uses `Audio Match` / `No Audio` terminology consistently
+- Auto Lock is enabled by default again and remains available as an explicit per-user toggle
+- Removed the ambiguous clear icon beside Lock Sync
+
+### Fixed
+
+- Improved metadata table focus, rectangular selection, keyboard navigation, Thai-layout shortcuts, column resizing, scroll performance, and minimum-window behavior
+- Fixed CSV parsing for CRLF, quoted values, empty trailing fields, duplicate headers, and unknown columns
+- Fixed metadata import matching so missing or ambiguous filenames are reported and skipped rather than silently applied to the wrong clip
+- Fixed metadata preview playback, seeking, multichannel monitoring, clip navigation, and stale-player crashes/black frames
+- Fixed waveform rendering at clip tails and preserved full duration when downsampling
+- Fixed speed-duplicate FCPXML element ordering so generated XML passes Final Cut Pro DTD validation
+- Fixed project save/open state, metadata persistence, and relink matching across machines with duplicate filenames
+- Changing clips while video is playing now recreates the viewer/player state so the newly selected clip does not remain black
+- Release builds no longer include the debug-only `get-task-allow` entitlement
+
+### Distribution
+
+- The app and Workflow Extension are signed with Developer ID, use hardened runtime, and are notarized by Apple
+- The release script now signs, submits, staples, and validates the DMG with Gatekeeper
+
 ## 1.4.5
 
 ### Improved

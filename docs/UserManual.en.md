@@ -9,9 +9,11 @@
 4. [Installation](#4-installation)
 5. [Interface Overview](#5-interface-overview)
 6. [Standard Workflow](#6-standard-workflow)
-7. [Advanced Features](#7-advanced-features)
-8. [Keyboard Shortcuts](#8-keyboard-shortcuts)
-9. [Resources & Links](#9-resources--links)
+7. [Metadata View](#7-metadata-view)
+8. [Timeline Detail](#8-timeline-detail)
+9. [Advanced Features](#9-advanced-features)
+10. [Keyboard Shortcuts](#10-keyboard-shortcuts)
+11. [Resources & Links](#11-resources--links)
 
 ---
 
@@ -23,6 +25,9 @@
 - Analyzes audio waveforms from both video and WAV files
 - Automatically finds matching sync points using Audio Fingerprinting technology
 - Uses Timecode for matching when valid timecode data is available
+- Reviews and edits production metadata in a spreadsheet-style table
+- Imports metadata reports from CSV, XLSX, and PDF, with local PDF/OCR processing
+- Refines individual sync offsets in Timeline Detail with aligned waveforms
 - Exports FCPXML files ready for immediate import into Final Cut Pro
 
 ---
@@ -65,27 +70,11 @@ In professional film and video production:
 
 ## 4. Installation
 
-### ⚠️ Important: App is Not Notarized by Apple
+WaveformMatcher 1.4.6 and later is signed with a Developer ID certificate and notarized by Apple.
 
-Since WaveformMatcher is an independent app that hasn't been submitted to Apple for notarization, macOS Gatekeeper will block it on first launch.
-
-#### Option 1 — Right-Click to Open (Recommended)
-
-1. In Finder, **right-click** on `WaveformMatcher.app`
-2. Select **Open** from the menu
-3. In the dialog that appears, click **Open** again
-4. If still blocked:
-   - Go to **System Settings → Privacy & Security**
-   - Click **Open Anyway**
-
-#### Option 2 — Use Terminal
-
-1. Open **Terminal**
-2. Run the command (adjust the path to where you placed the app):
-   ```bash
-   xattr -dr com.apple.quarantine /Applications/WaveformMatcher.app
-   ```
-3. Open the app normally
+1. Open the downloaded DMG.
+2. Drag `WaveformMatcher.app` to **Applications**.
+3. Open WaveformMatcher normally from Applications.
 
 ---
 
@@ -101,12 +90,14 @@ When you first open the app, you'll see the main interface divided into 3 sectio
 - **FCPXML**: Shows currently loaded file
 - **Media Folder**: Folder containing WAV files
 - **Matching Settings**: Sync mode configuration
-- **Export Settings**: Export configuration
+- **Metadata**: Opens Metadata View and selects the source policy used for preview/export
+- **Output Setup**: FCPXML type, naming, format, and export options
 
 #### Main Area
-- **Clip Table**: Lists source video filenames and supports ascending or descending sorting by Filename, Scene, Speed, and Status
-- **Waveform Viewer**: Multi-channel WAV waveform display
-- **Video Player**: Video playback with Seek Bar
+- **Sync View**: Dual video/audio viewer, metadata inspector, Timeline Detail, and match table
+- **Metadata View**: Editable metadata spreadsheet and Import/Export tools
+- **View Switch**: Use `Cmd+1` for Sync View and `Cmd+2` for Metadata View
+- **Table Scale**: Changes the table size in both views
 
 ---
 
@@ -301,7 +292,18 @@ If clips in FCPXML have markers set in Final Cut Pro:
 
 **Note:** Marker guides remain non-editable assistants until you choose **Use Marker Pair**.
 
-### Step 7 — Configure Export
+### Step 7 — Review and Edit Metadata
+
+1. Open **Metadata View** from the sidebar, toolbar, or press `Cmd+2`.
+2. Choose **Source Metadata**. Video is the safest starting point; combined modes fill missing fields from the matched audio.
+3. Review Scene, Take, Reel, Camera Name, Angle, Note, Good Take, Speed, and Rec FPS.
+4. Edit individual cells or use the spreadsheet tools for multiple clips.
+5. If production reports are available, use **Import/Export → Import Metadata…** and review the mapping before applying.
+6. Return to Sync View with `Cmd+1` whenever a sync result needs correction.
+
+Metadata edits become the values used by FCPXML export. Hidden columns are not deleted; compatible imported custom metadata continues to round-trip unless the user overrides it.
+
+### Step 8 — Configure Export
 
 Return to left sidebar, **Export Settings** section:
 
@@ -334,9 +336,14 @@ Return to left sidebar, **Export Settings** section:
 
 #### Additional Options
 
-**Metadata From:** Choose metadata source
-- **Video Clip**: Use metadata from video file (Scene, Take, Camera Angle, etc.)
-- **Audio (WAV)**: Use metadata from WAV file
+**Clip Name:** Choose the naming source
+- **Video**: Source video filename
+- **Audio**: Matched production-audio name
+- **Metadata**: Builds a name from the active metadata naming template and falls back to the video filename when no usable metadata exists
+
+**Metadata Template:** The default is `Scene_Take_Angle`. Empty fields are skipped cleanly. User-created custom metadata can also be added to a naming template.
+
+**MC Angle Name:** For Multicam output, choose Filename, Camera Angle, or Camera Name.
 
 **Spatial Conform:** (When clip resolution doesn't match output)
 - **Fit**: Scale clip to fit frame showing entire image (may have black bars)
@@ -355,7 +362,7 @@ Return to left sidebar, **Export Settings** section:
 - Calculates speed automatically: `Speed = Record FPS ÷ Timeline FPS`
 - Example: Shot 48fps, timeline 24fps = 200% speed
 
-### Step 8 — Export and Import to Final Cut Pro
+### Step 9 — Export and Import to Final Cut Pro
 
 1. **Click Export Button:**
    - Click **Export FCPXML Event** (bottom left sidebar)
@@ -385,9 +392,131 @@ Return to left sidebar, **Export Settings** section:
 
 ---
 
-## 7. Advanced Features
+## 7. Metadata View
 
-### 7.1 Detect Slate (Experimental) ⚠️
+Metadata View is the preparation stage between synchronization and FCPXML export. It presents one row per video result and keeps an authoritative set of resolved metadata values for export.
+
+### 7.1 Source Metadata
+
+The **Source Metadata** menu controls the starting values shown in the table:
+
+- **Video**: Use video metadata only.
+- **Audio**: Use metadata from the matched audio when available.
+- **Video + Audio**: Start with video and fill empty fields from audio.
+- **Audio + Video**: Start with audio and fill empty fields from video.
+
+Changing the source policy does not erase manual edits. A manually edited cell remains an override until it is reset.
+
+### 7.2 Built-in and Custom Columns
+
+Built-in editable fields include Scene, Take, Reel, Camera Name, Angle, Note, Good Take, Speed, and Rec FPS.
+
+- **Note** exports as a Final Cut Pro note.
+- **Good Take** exports as a Final Cut Pro Favorite rating. For Multicam, a favorite on any contributing clip is retained on the exported multicam result.
+- **Rec FPS** uses explicit Record/Sensor FPS when available and otherwise begins with the clip frame rate.
+- **Speed** can remain automatic or be overridden manually per clip.
+- **+ Column** shows compatible custom metadata found in the imported FCPXML, hides/shows columns, and creates or deletes WFM custom columns.
+
+Hidden columns remain in the project and continue to round-trip. Deleting a WFM-created custom column removes that table field after confirmation.
+
+### 7.3 Spreadsheet Editing
+
+- Single-click a cell to select it; double-click or press `Return` to edit text.
+- Drag across cells or Shift-click to create a rectangular selection.
+- Copy and paste tab-separated rectangles between WaveformMatcher and spreadsheet apps. Select only the top-left destination cell to paste a copied block.
+- **Fill** copies the source value down the selected range; use the fill handle for drag-fill.
+- **Number** creates a numeric sequence across selected rows.
+- **Clear** removes selected overrides; **Reset Selected** restores resolved source values.
+- **Find** supports Selection, Active Column, or Visible Columns, with Match Case and Whole Cell options.
+- Cell edits and table-structure actions participate in Undo/Redo.
+- Resize columns by dragging header dividers. Use horizontal scrolling when the visible columns exceed the window width.
+
+### 7.4 Auto Speed and Rec FPS
+
+Auto Speed calculates `Rec FPS ÷ Timeline FPS × 100`.
+
+- Blue Speed values are automatic, including normal `100%`.
+- Orange Speed or Rec FPS values are manual overrides.
+- Editing Rec FPS recalculates Speed only while that row remains in Auto mode.
+- Editing Speed manually unlocks that clip from later automatic recalculation; other clips remain automatic.
+- Click **Auto Speed** to reapply automatic calculation to selected rows, or to current visible rows when nothing is selected.
+
+### 7.5 Synced Preview
+
+- Press `Space` to open or close the in-app synced preview for the active row.
+- The preview uses the stored WFM offset and a stereo monitor mix for multichannel WAV playback; export still retains the original multichannel audio.
+- Use the arrow keys to move through visible rows while the preview follows the active clip.
+- The scrub bar shows FCP markers, manual sync points, slate guides, and slate visible ranges when available.
+- Press `Option+Space` only when a raw Finder Quick Look reference is needed.
+
+### 7.6 Import Metadata
+
+Choose **Import/Export → Import Metadata…** or press `Option+Cmd+I`.
+
+Supported input:
+- **CSV**: Reliable interchange and round-trip editing.
+- **XLSX**: Select the worksheet and header row when the workbook contains multiple tables or title rows.
+- **PDF**: Reconstructs table structure locally and uses Apple Vision OCR when the PDF text layer is missing or unreliable.
+
+Import workflow:
+1. Select the source file.
+2. For XLSX/PDF, choose the correct table or header row if requested.
+3. Choose the matching rule. Prefer exact Filename/Path; structured reports may offer Reel + Clip or token-based matching.
+4. Map each source column to an existing metadata field, Ignore it, or create a custom field.
+5. Check the matched, needs-review, and skipped counts before applying.
+6. Leave **Overwrite manual edits** off unless the imported report should replace existing manual work.
+7. Apply the import. Missing or ambiguous rows are skipped rather than guessed.
+
+PDF processing is entirely local. OCR results, especially Thai text and reports with merged cells, should be reviewed before export. Review warnings are guidance; they do not modify a clip until **Apply Import** is pressed.
+
+### 7.7 Export Metadata
+
+Choose **Import/Export → Export Metadata…** or press `Option+Cmd+E`.
+
+- Row scope: All Project Rows, Current Filter/Search, or Selected Rows.
+- Column scope: All Metadata Columns or Visible Columns.
+- Output is CSV for interchange with spreadsheet and production-report workflows.
+
+### 7.8 Reel Helper and Metadata Naming
+
+The **Reel** menu can populate visible rows from Embedded Reel, Source Filename, or Folder Name. **Custom Value…** applies to the current selection/active row.
+
+When **Clip Name → Metadata** is selected, the naming builder uses metadata fields in the chosen order and removes empty separators. The default template is `Scene_Take_Angle`; if no field produces a usable name, WFM uses the video filename. Speed duplicates use the same base name before appending the FPS suffix.
+
+---
+
+## 8. Timeline Detail
+
+Timeline Detail is the clip-by-clip sync editor inside Sync View. It opens by default for the active clip and can also be reopened by double-clicking a filename.
+
+### 8.1 Reading the Timeline
+
+- The blue **Video** lane shows mixed camera scratch audio.
+- The green **Audio Match** lane shows the matched production audio at the stored offset.
+- Both lanes share one ruler and playhead, so clap transients can be compared visually.
+- FCP markers, manual sync points, slate ranges, and slate guides remain visible as review references.
+- Clicking the Video lane focuses video playback; clicking the Audio Match lane focuses audio. The active lane is outlined.
+
+### 8.2 Adjusting Sync
+
+- Drag the Audio Match lane horizontally to change the offset.
+- Press `,` or `.` to nudge by one timeline frame; hold Shift for ten frames.
+- Use `Cmd++` / `Cmd+-` to zoom and `Shift+Z` to fit the complete extent.
+- Use the reset-offset control to return Audio Match to zero offset.
+- One drag becomes one Undo step. The project is marked changed only when the committed value differs.
+- A committed drag/nudge or manually locked marker/slate pair receives the orange **Manual** status while remaining valid for Matched filtering and export.
+
+### 8.3 Pair-scoped Resync
+
+Use the Resync menu in the Timeline header to run **Waveform** or **Timecode** again for only the displayed Video and Audio Match. It does not search other WAV files in the project. The replacement result is undoable.
+
+Auto Lock is enabled by default. Turn it off when you want to place and inspect both sync points before committing with **Lock Sync**.
+
+---
+
+## 9. Advanced Features
+
+### 9.1 Detect Slate (Experimental) ⚠️
 
 **What is a Film Slate?**
 
@@ -461,7 +590,7 @@ When you click Detect Slate, the system saves:
 
 **Recommendation:** Use Detect Slate as a **starting point** only — always verify and adjust with Manual Sync
 
-### 7.2 Auto Speed
+### 9.2 Auto Speed
 
 **What is Auto Speed?**
 
@@ -511,7 +640,7 @@ Auto Speed works when clips have **Record Frame Rate** metadata from:
    - Speed saved in FCPXML
    - When imported to Final Cut Pro, clips play at calculated speed
 
-### 7.3 Project Files (.wmproj)
+### 9.3 Project Files (.wmproj)
 
 **What is .wmproj?**
 
@@ -546,7 +675,7 @@ WaveformMatcher project file used to save work-in-progress for later continuatio
 
 ---
 
-## 8. Keyboard Shortcuts
+## 10. Keyboard Shortcuts
 
 ### General Operations
 
@@ -556,6 +685,10 @@ WaveformMatcher project file used to save work-in-progress for later continuatio
 | Export FCPXML | `Cmd+E` |
 | Save project | `Cmd+S` |
 | Open project | `Cmd+O` |
+| Sync View / Metadata View | `Cmd+1` / `Cmd+2` |
+| Show/Hide Sidebar | `Cmd+3` |
+| Focus Search | `Option+F` |
+| Import / Export Metadata | `Option+Cmd+I` / `Option+Cmd+E` |
 
 ### Video Playback
 
@@ -598,18 +731,45 @@ WaveformMatcher project file used to save work-in-progress for later continuatio
 | Next Clip | `↓` (Down Arrow) |
 | Previous Clip | `↑` (Up Arrow) |
 
+### Sync and Filters
+
+| Action | Shortcut |
+|--------|----------|
+| Waveform / Timecode / Manual mode | `Option+1` / `Option+2` / `Option+3` |
+| Start selected sync mode | `Option+S` |
+| All / Matched / Review / Unmatched | `Option+4` / `Option+5` / `Option+6` / `Option+7` |
+
+### Metadata Table
+
+| Action | Shortcut |
+|--------|----------|
+| Copy / Paste selected cells | `Option+Cmd+C` / `Option+Cmd+V` |
+| Fill down / Auto-number | `Option+D` / `Option+N` |
+| Clear / Reset selected | `Cmd+Delete` / `Cmd+R` |
+| Find & Replace | `Cmd+F` |
+| Open/close synced preview | `Space` |
+| Raw media Quick Look | `Option+Space` |
+| Table zoom in / out / reset | `Option++` / `Option+-` / `Option+0` |
+
+### Timeline Detail
+
+| Action | Shortcut |
+|--------|----------|
+| Nudge Audio Match one frame | `,` / `.` |
+| Nudge Audio Match ten frames | `Shift+,` / `Shift+.` |
+| Timeline zoom in / out | `Cmd++` / `Cmd+-` |
+| Fit timeline | `Shift+Z` |
+| Close Timeline Detail | `Esc` |
+
 The complete searchable list is available from **Help → Keyboard Shortcuts…**.
 
 ---
 
-## 9. Resources & Links
+## 11. Resources & Links
 
 ### Downloads & Documentation
 
-- **Download WaveformMatcher:**  
-  [wtembundit.github.io/WaveformMatcher](https://wtembundit.github.io/WaveformMatcher/)
-
-- **GitHub (Releases & Docs):**  
+- **Download WaveformMatcher / Releases & Docs:**
   [github.com/wtembundit/WaveformMatcher](https://github.com/wtembundit/WaveformMatcher)
 
 - **Changelog:**  
@@ -632,7 +792,7 @@ Tools for video and audio processing (used for reading timecode from raw files)
 - Create Issue on GitHub: [github.com/wtembundit/WaveformMatcher/issues](https://github.com/wtembundit/WaveformMatcher/issues)
 
 **Release repository:**
-- This public repository hosts releases, documentation, and the download website.
+- This public repository hosts releases and documentation.
 
 ---
 
@@ -693,6 +853,6 @@ Timecode is a system for assigning "time addresses" (Hours:Minutes:Seconds:Frame
 
 ---
 
-**WaveformMatcher v1.4.5**
+**WaveformMatcher v1.4.6**
 Built with assistance from Claude Code and Codex
-[Report Issues](https://github.com/wtembundit/WaveformMatcher/issues) | [Download](https://wtembundit.github.io/WaveformMatcher/)
+[Report Issues and Downloads](https://github.com/wtembundit/WaveformMatcher)

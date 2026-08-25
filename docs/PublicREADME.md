@@ -9,13 +9,19 @@ macOS app that matches video clips to audio WAV files by comparing waveforms, th
 - **Manual sync mode** — opens clips directly in Manual Sync without running waveform or timecode first
 - **Experimental Detect Slate guide** — finds likely slate visible ranges, visual clap guides, and audio clap candidates; saves results in `.wmproj` and can apply them with `Use Detect Slate`
 - **Manual sync points** — distinct video/audio In-point controls with optional Auto Lock, unlock-to-adjust, and Undo
+- **Timeline Detail** — edit a matched pair on one waveform timeline with direct offset dragging, frame nudging, zoom/fit, undo, and per-clip resync
+- **Metadata View** — spreadsheet-style metadata editing with rectangular selection, copy/paste, fill, auto-number, Find & Replace, custom columns, undo/redo, and synced preview
+- **Smart metadata import** — import CSV, XLSX, and PDF production reports with mapping, row matching, review warnings, and local PDF/OCR processing
+- **Metadata export** — export all, filtered, or selected metadata rows to CSV
+- **Editorial metadata** — edit Scene, Take, Reel, Camera Name, Angle, Note, Good Take, Speed, Rec FPS, and compatible custom Final Cut Pro metadata
+- **Metadata naming** — name exported clips from metadata fields with source-filename fallback
 - **Sortable clip table** — sort source filenames, scene, speed, or status in either direction
 - **Keyboard shortcuts window** — searchable command reference from the Help menu
 - **Export modes**
   - **Sync Clips** — one `<sync-clip>` per matched pair
   - **Multicam** — one `<multicam>` per WAV file with all matching cameras as angles
 - **Timeline-aware parsing** — supports Event XML, split timeline cuts, separate timeline clips, connected audio, and primary storyline audio
-- **Metadata** — round-trips FCP studio tags (reel, scene, shot, camera angle, keywords) from source FCPXML
+- **Metadata round-trip** — preserves imported metadata and applies table overrides to sync clips, multicam clips, original clips, and speed duplicates
 - **Auto Speed** — one-click button calculates playback speed from recorded frame rate metadata (recFPS ÷ timelineFPS); supports compatible FCPXML/custom Rec FPS fields, including metadata written by Shot Notes X
 - **Export Original Clips** — optionally export original (unsynced) clips in a separate FCP event alongside synced output
 - **Export Video Speed Duplicate** — for speed-adjusted clips, exports an additional 1× copy named with the recorded FPS (e.g. "48FPS")
@@ -35,42 +41,29 @@ macOS app that matches video clips to audio WAV files by comparing waveforms, th
 
 ## Installation Note
 
-This app is not notarized with Apple. On first launch, macOS Gatekeeper may block it.
-
-**Option 1 — Right-click to open:**
-Right-click `WaveformMatcher.app` → **Open** → click **Open** in the dialog.
-
-If macOS still blocks the app, go to **System Settings** → **Privacy & Security** and click **Open Anyway**.
-
-**Option 2 — Remove quarantine flag via Terminal:**
-```bash
-xattr -dr com.apple.quarantine /Applications/WaveformMatcher.app
-```
+WaveformMatcher 1.4.6 and later is signed with a Developer ID certificate and notarized by Apple. Install it by opening the DMG and dragging the app to Applications.
 
 ## Documentation
 
 - [Changelog](CHANGELOG.md)
 - [User Manual (English source)](docs/UserManual.en.md)
 - [คู่มือการใช้งาน (ภาษาไทย)](docs/UserManual.th.md)
-- [Release Website](https://wtembundit.github.io/WaveformMatcher/)
 - [User Manual PDF](UserManual.pdf)
 
-## 1.4.5 Release Notes
+## 1.4.6 Release Notes
 
-WaveformMatcher 1.4.5 is a bug-fix and stability release focused on smoother review and safer project handoff.
+WaveformMatcher 1.4.6 is a major workflow update that adds metadata preparation and detailed timeline review to the existing synchronization workflow.
 
-- Smoother clip-table scrolling and lighter WAV match controls
-- Dynamic Scene/Take column sizing to avoid overlapping text
-- More accurate Manual Sync waveform drawing for long or trimmed audio
-- Safer relink behavior when duplicate filenames exist in copied media folders
-- Save state updates immediately after saving, so closing right away does not ask again
-- Initial XCTest regression coverage for parser, generator, project files, relink, speed input, and waveform downsampling
+- Introduces Metadata View with spreadsheet editing, custom columns, Good Take, Note, Rec FPS, Auto Speed, naming templates, Find & Replace, and synced preview
+- Introduces CSV/XLSX/PDF metadata import and CSV export with mapping, matching, review, and local OCR fallback
+- Introduces Timeline Detail with aligned waveforms, direct offset editing, frame nudging, zoom/fit, undo, and pair-scoped resync
+- Applies current table metadata consistently to Sync Clip, Multicam, original-clip, and speed-duplicate FCPXML output
+- Improves player, waveform, project, relink, table, shortcut, and FCPXML stability
+- Ships as a Universal app signed with Developer ID and notarized by Apple
 
 ## Releases
 
-This public repository hosts WaveformMatcher releases, documentation, and the download website.
-
-The GitHub Pages release website is published from [`docs/`](docs/).
+This public repository hosts WaveformMatcher releases and documentation.
 
 ## Support
 
@@ -84,6 +77,3 @@ Report issues or request features from the [Issues page](https://github.com/wtem
 ## Acknowledgements
 
 - [FFmpeg / ffprobe](https://ffmpeg.org) — audio and video processing; licensed under LGPL 2.1+
-
----
-*Built with the assistance of [Claude Code](https://claude.ai/code) and Codex*
