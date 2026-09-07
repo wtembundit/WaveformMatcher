@@ -50,6 +50,10 @@ WaveformMatcher 1.4.6 and later is signed with a Developer ID certificate and no
 - [คู่มือการใช้งาน (ภาษาไทย)](docs/UserManual.th.md)
 - [User Manual PDF](UserManual.pdf)
 
+## 1.4.7 Release Notes
+
+WaveformMatcher 1.4.7 fixes renamed Final Cut Pro audio metadata import and expands clip naming across Sync View, Metadata View, and FCPXML export. It adds Video/Audio Filename choices, editable Clip Name values, reorderable metadata tokens with custom prefixes and separators, Audio Match naming that follows the selected source, Project FPS wording, compact sidebar menus, collapsible waveform settings, and a confirmation before a full sync rerun replaces current work.
+
 ## 1.4.6 Release Notes
 
 WaveformMatcher 1.4.6 is a major workflow update that adds metadata preparation and detailed timeline review to the existing synchronization workflow.

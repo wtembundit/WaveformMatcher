@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.4.7
+
+### Added
+
+- Added Video Filename and Audio Filename clip-naming options; filename-based names omit the source extension
+- Added an editable Clip Name column in Sync View and Metadata View that previews the exported name, follows the active naming option, and supports per-clip manual overrides
+- Added metadata naming templates with reorderable tokens, optional text before each token, and underscore, hyphen, slash, hash, space, or no separator
+- Added a confirmation before running any full sync mode again, with guidance to use pair-scoped Resync or Manual Sync when only one clip needs adjustment
+
+### Changed
+
+- Audio Match now displays the Final Cut Pro audio clip name by default and follows Audio Filename when that naming option is selected
+- Renamed Timeline FPS to Project FPS throughout the current UI
+- Updated Output Setup dropdowns to use the compact sidebar menu style
+- Waveform matching thresholds now use tested defaults and stay collapsed under Adjust Matching Settings until needed
+- Simplified Timecode and Manual mode guidance and standardized current UI wording on Audio
+
+### Fixed
+
+- Fixed Final Cut Pro audio browser clips losing their clip name, metadata, notes, ratings, roles, and markers when the browser name differed from the source filename
+- Kept manual Clip Name values out of exported metadata fields while applying them consistently to Sync Clip and Multicam names
+
 ## 1.4.6
 
 ### Added

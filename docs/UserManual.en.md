@@ -160,8 +160,8 @@ The app has 3 modes in **Matching Settings**:
 - Situations without timecode
 - General production work
 
-**Settings:**
-- **Comparison Length**: Length of audio to compare (default 48s)
+**Settings:** The tested defaults are used automatically. Click **Adjust Matching Settings** only when a job needs tuning.
+- **Comparison Length**: Length of audio to compare (default 40s)
   - Shorter = Faster but potentially less accurate
   - Longer = Slower but more accurate
 - **Matched ≥**: Minimum match score threshold for "matched" status (default 25%)
@@ -184,13 +184,15 @@ The app has 3 modes in **Matching Settings**:
 
 #### 🟡 Manual
 
-**How it Works:** Skips automatic matching, opens Manual Sync for clip-by-clip manual work
+**How it Works:** Opens clips in Sync View so you can choose Audio, set sync points, and lock each result.
 
 **Best For:**
 - Clips where waveform matching failed
 - Reviewing and correcting app results
 - Work requiring highest precision
-- When you want to select WAVs clip by clip
+- When you want to select Audio clip by clip
+
+After a full sync has already run, starting Waveform, Timecode, or Manual Sync again asks for confirmation because the current results and edits will be replaced. To update one clip, use **Resync** in Timeline Detail or adjust it with Manual Sync.
 
 ### Step 5 — Review Match Results
 
@@ -325,7 +327,7 @@ Return to left sidebar, **Export Settings** section:
 - Default: Name of imported FCPXML file
 - Recommended: Use descriptive project name
 
-**Timeline FPS:**
+**Project FPS:**
 - Frame rate of timeline in Final Cut Pro
 - Set to match your project (e.g., 24, 25, 30, 50, 60)
 - **Important:** If set incorrectly, clips will play at wrong speed
@@ -337,9 +339,11 @@ Return to left sidebar, **Export Settings** section:
 #### Additional Options
 
 **Clip Name:** Choose the naming source
-- **Video**: Source video filename
-- **Audio**: Matched production-audio name
-- **Metadata**: Builds a name from the active metadata naming template and falls back to the video filename when no usable metadata exists
+- **Video**: Final Cut Pro browser name of the video clip
+- **Video Filename**: Source video filename without its extension
+- **Audio**: Final Cut Pro browser name of the matched production-audio clip
+- **Audio Filename**: Source audio filename without its extension
+- **Metadata**: Builds a name from the active metadata naming template and falls back to the video clip name when no usable metadata exists
 
 **Metadata Template:** The default is `Scene_Take_Angle`. Empty fields are skipped cleanly. User-created custom metadata can also be added to a naming template.
 
@@ -359,7 +363,7 @@ Return to left sidebar, **Export Settings** section:
 
 **Auto Speed:**
 - Appears when clip has Record Frame Rate metadata
-- Calculates speed automatically: `Speed = Record FPS ÷ Timeline FPS`
+- Calculates speed automatically: `Speed = Record FPS ÷ Project FPS`
 - Example: Shot 48fps, timeline 24fps = 200% speed
 
 ### Step 9 — Export and Import to Final Cut Pro
@@ -409,8 +413,9 @@ Changing the source policy does not erase manual edits. A manually edited cell r
 
 ### 7.2 Built-in and Custom Columns
 
-Built-in editable fields include Scene, Take, Reel, Camera Name, Angle, Note, Good Take, Speed, and Rec FPS.
+Built-in editable fields include Clip Name, Scene, Take, Reel, Camera Name, Angle, Note, Good Take, Speed, and Rec FPS.
 
+- **Clip Name** previews the name that will be exported. It follows the Clip Name option automatically; editing it creates an orange manual override, and Reset returns it to the automatic value. Filename-based values omit the source extension.
 - **Note** exports as a Final Cut Pro note.
 - **Good Take** exports as a Final Cut Pro Favorite rating. For Multicam, a favorite on any contributing clip is retained on the exported multicam result.
 - **Rec FPS** uses explicit Record/Sensor FPS when available and otherwise begins with the clip frame rate.
@@ -433,7 +438,7 @@ Hidden columns remain in the project and continue to round-trip. Deleting a WFM-
 
 ### 7.4 Auto Speed and Rec FPS
 
-Auto Speed calculates `Rec FPS ÷ Timeline FPS × 100`.
+Auto Speed calculates `Rec FPS ÷ Project FPS × 100`.
 
 - Blue Speed values are automatic, including normal `100%`.
 - Orange Speed or Rec FPS values are manual overrides.
@@ -481,7 +486,7 @@ Choose **Import/Export → Export Metadata…** or press `Option+Cmd+E`.
 
 The **Reel** menu can populate visible rows from Embedded Reel, Source Filename, or Folder Name. **Custom Value…** applies to the current selection/active row.
 
-When **Clip Name → Metadata** is selected, the naming builder uses metadata fields in the chosen order and removes empty separators. The default template is `Scene_Take_Angle`; if no field produces a usable name, WFM uses the video filename. Speed duplicates use the same base name before appending the FPS suffix.
+When **Clip Name → Metadata** is selected, the naming builder uses metadata fields in the chosen order and removes empty separators. Each token can have optional text before it, and the separator can be underscore, hyphen, slash, hash, space, or none. The default template is `Scene_Take_Angle`; if no field produces a usable name, WFM uses the video clip name. Speed duplicates use the same base name before appending the FPS suffix. In Multicam mode, all rows sharing the same production-audio clip show and edit one group-level Clip Name.
 
 ---
 
@@ -508,7 +513,7 @@ Timeline Detail is the clip-by-clip sync editor inside Sync View. It opens by de
 
 ### 8.3 Pair-scoped Resync
 
-Use the Resync menu in the Timeline header to run **Waveform** or **Timecode** again for only the displayed Video and Audio Match. It does not search other WAV files in the project. The replacement result is undoable.
+Use the Resync menu in the Timeline header to run **Waveform** or **Timecode** again for only the displayed Video and Audio Match. It does not search other Audio files in the project. The replacement result is undoable.
 
 Auto Lock is enabled by default. Turn it off when you want to place and inspect both sync points before committing with **Lock Sync**.
 
@@ -633,7 +638,7 @@ Auto Speed works when clips have **Record Frame Rate** metadata from:
    - **Auto Speed** button appears if metadata exists
 
 2. **Click Auto Speed Button:**
-   - System calculates: `Record FPS ÷ Timeline FPS`
+   - System calculates: `Record FPS ÷ Project FPS`
    - Speed value entered automatically
 
 3. **Export:**
@@ -853,6 +858,6 @@ Timecode is a system for assigning "time addresses" (Hours:Minutes:Seconds:Frame
 
 ---
 
-**WaveformMatcher v1.4.6**
+**WaveformMatcher v1.4.7**
 Built with assistance from Claude Code and Codex
 [Report Issues and Downloads](https://github.com/wtembundit/WaveformMatcher)

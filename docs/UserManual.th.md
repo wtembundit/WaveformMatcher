@@ -160,8 +160,8 @@ WaveformMatcher 1.4.6 เป็นต้นไปเซ็นด้วย Develo
 - กรณีที่ไม่มี Timecode
 - การถ่ายทำทั่วไป
 
-**การตั้งค่า:**
-- **Comparison Length**: ความยาวของเสียงที่ใช้เปรียบเทียบ (ค่าเริ่มต้น 48s)
+**การตั้งค่า:** ระบบใช้ค่าที่ทดสอบไว้เป็นค่าเริ่มต้น กด **ปรับค่า Matching** เมื่อต้องการจูนเฉพาะงาน
+- **Comparison Length**: ความยาวของเสียงที่ใช้เปรียบเทียบ (ค่าเริ่มต้น 40s)
   - สั้นลง = เร็วขึ้น แต่อาจแม่นยำน้อยลง
   - ยาวขึ้น = ช้าลง แต่แม่นยำมากขึ้น
 - **Matched ≥**: เกณฑ์คะแนน match ขั้นต่ำที่ถือว่า "matched" (ค่าเริ่มต้น 25%)
@@ -184,13 +184,15 @@ WaveformMatcher 1.4.6 เป็นต้นไปเซ็นด้วย Develo
 
 #### 🟡 Manual
 
-**การทำงาน:** ข้ามการ match อัตโนมัติ เปิดหน้า Manual Sync ให้ทำเองทีละคลิป
+**การทำงาน:** เปิดคลิปใน Sync View เพื่อเลือก Audio ตั้งจุด sync และ lock ผลลัพธ์ทีละคลิป
 
 **เหมาะสำหรับ:**
 - คลิปที่ waveform match ไม่สำเร็จ
 - การตรวจสอบและแก้ไขผลที่แอปทำให้
 - งานที่ต้องการความแม่นยำสูงสุด
-- กรณีที่ต้องการเลือก WAV เองทีละคลิป
+- กรณีที่ต้องการเลือก Audio เองทีละคลิป
+
+หลังจากรัน sync ทั้งโปรเจกต์แล้ว หากเริ่ม Waveform, Timecode หรือ Manual Sync อีกครั้ง แอปจะถามยืนยันเพราะผลลัพธ์และค่าที่แก้ไว้จะถูกแทนที่ หากต้องการแก้เพียงคลิปเดียว ให้ใช้ **Resync** ใน Timeline Detail หรือปรับด้วย Manual Sync
 
 ### ขั้นตอนที่ 5 — ตรวจสอบผลการ Match
 
@@ -325,7 +327,7 @@ WaveformMatcher 1.4.6 เป็นต้นไปเซ็นด้วย Develo
 - ค่าเริ่มต้น: ชื่อของไฟล์ FCPXML ที่ import
 - แนะนำ: ตั้งชื่อให้สื่อถึงโปรเจกต์
 
-**Timeline FPS:**
+**Project FPS:**
 - Frame rate ของ timeline ใน Final Cut Pro
 - ตั้งให้ตรงกับ project ของคุณ (เช่น 24, 25, 30, 50, 60)
 - **สำคัญ:** ถ้าตั้งผิด คลิปจะเล่นผิดความเร็ว
@@ -337,9 +339,11 @@ WaveformMatcher 1.4.6 เป็นต้นไปเซ็นด้วย Develo
 #### ตัวเลือกเพิ่มเติม
 
 **Clip Name:** เลือกที่มาของชื่อคลิป
-- **Video**: ชื่อไฟล์วิดีโอต้นฉบับ
-- **Audio**: ชื่อ production audio ที่ match
-- **Metadata**: สร้างชื่อจาก template และ fallback เป็นชื่อวิดีโอถ้าไม่มี metadata ที่ใช้ได้
+- **Video**: ชื่อคลิปวิดีโอใน Browser ของ Final Cut Pro
+- **Video Filename**: ชื่อไฟล์วิดีโอต้นฉบับโดยไม่รวมนามสกุล
+- **Audio**: ชื่อคลิป production audio ใน Browser ของ Final Cut Pro
+- **Audio Filename**: ชื่อไฟล์เสียงต้นฉบับโดยไม่รวมนามสกุล
+- **Metadata**: สร้างชื่อจาก template และ fallback เป็นชื่อคลิปวิดีโอถ้าไม่มี metadata ที่ใช้ได้
 
 **Metadata Template:** ค่าเริ่มต้นคือ `Scene_Take_Angle` โดยจะข้ามช่องว่างและ separator ที่ไม่จำเป็น Custom metadata ที่ user สร้างสามารถเพิ่มใน template ได้
 
@@ -359,7 +363,7 @@ WaveformMatcher 1.4.6 เป็นต้นไปเซ็นด้วย Develo
 
 **Auto Speed:**
 - ปรากฏเมื่อคลิปมี metadata ของ Record Frame Rate
-- คำนวณความเร็วอัตโนมัติ: `Speed = Record FPS ÷ Timeline FPS`
+- คำนวณความเร็วอัตโนมัติ: `Speed = Record FPS ÷ Project FPS`
 - ตัวอย่าง: ถ่าย 48fps, timeline 24fps = ความเร็ว 200%
 
 ### ขั้นตอนที่ 9 — Export และ Import กลับ Final Cut Pro
@@ -409,8 +413,9 @@ Metadata View คือขั้นตอนเตรียมข้อมูล
 
 ### 7.2 Built-in และ Custom Columns
 
-ช่องที่แก้ได้ประกอบด้วย Scene, Take, Reel, Camera Name, Angle, Note, Good Take, Speed และ Rec FPS
+ช่องที่แก้ได้ประกอบด้วย Clip Name, Scene, Take, Reel, Camera Name, Angle, Note, Good Take, Speed และ Rec FPS
 
+- **Clip Name** แสดงชื่อที่จะใช้ตอน export และเปลี่ยนตามตัวเลือก Clip Name โดยอัตโนมัติ เมื่อแก้เองค่าจะเป็น manual สีส้ม และ Reset จะคืนค่าอัตโนมัติ ชื่อแบบ Filename จะไม่รวมนามสกุลไฟล์
 - **Note** ส่งออกเป็น Note ของ Final Cut Pro
 - **Good Take** ส่งออกเป็น Favorite ถ้า Multicam มีคลิปใดคลิปหนึ่งเป็น Good Take สถานะนี้จะถูกเก็บใน multicam ที่ export
 - **Rec FPS** ใช้ Record/Sensor FPS ก่อน ถ้าไม่มีจะเริ่มจาก frame rate ของคลิป
@@ -433,7 +438,7 @@ Column ที่ซ่อนยังอยู่ในโปรเจกต์�
 
 ### 7.4 Auto Speed และ Rec FPS
 
-Auto Speed คำนวณ `Rec FPS ÷ Timeline FPS × 100`
+Auto Speed คำนวณ `Rec FPS ÷ Project FPS × 100`
 
 - Speed สีฟ้าคือค่า Auto รวมถึง `100%`
 - Speed หรือ Rec FPS สีส้มคือ manual override
@@ -481,7 +486,7 @@ Auto Speed คำนวณ `Rec FPS ÷ Timeline FPS × 100`
 
 เมนู **Reel** เติมค่าให้ visible rows จาก Embedded Reel, Source Filename หรือ Folder Name ส่วน **Custom Value…** ใช้กับ selection/active row
 
-เมื่อเลือก **Clip Name → Metadata** ระบบจะต่อชื่อจาก metadata ตามลำดับและตัด separator ที่ไม่มีค่าออก Template เริ่มต้นคือ `Scene_Take_Angle`; ถ้าไม่มีค่าที่ใช้ได้จะ fallback เป็นชื่อวิดีโอ ส่วน speed duplicate ใช้ชื่อฐานเดียวกันแล้วเติม FPS ต่อท้าย
+เมื่อเลือก **Clip Name → Metadata** ระบบจะต่อชื่อจาก metadata ตามลำดับและตัด separator ที่ไม่มีค่าออก แต่ละ token ใส่ข้อความนำหน้าได้ และเลือก separator เป็น underscore, hyphen, slash, hash, space หรือไม่เว้นเลยได้ Template เริ่มต้นคือ `Scene_Take_Angle`; ถ้าไม่มีค่าที่ใช้ได้จะ fallback เป็นชื่อคลิปวิดีโอ ส่วน speed duplicate ใช้ชื่อฐานเดียวกันแล้วเติม FPS ต่อท้าย ในโหมด Multicam ทุกแถวที่ใช้ production audio เดียวกันจะแสดงและแก้ Clip Name ระดับกลุ่มร่วมกัน
 
 ---
 
@@ -508,7 +513,7 @@ Timeline Detail คือหน้าปรับ sync รายคลิปใ�
 
 ### 8.3 Pair-scoped Resync
 
-เมนู Resync ที่หัว Timeline ใช้ **Waveform** หรือ **Timecode** ใหม่เฉพาะ Video และ Audio Match ที่แสดงอยู่ ไม่ค้น WAV อื่นในโปรเจกต์ และ undo ผลที่แทนได้
+เมนู Resync ที่หัว Timeline ใช้ **Waveform** หรือ **Timecode** ใหม่เฉพาะ Video และ Audio Match ที่แสดงอยู่ ไม่ค้น Audio อื่นในโปรเจกต์ และ undo ผลที่แทนได้
 
 Auto Lock เปิดเป็นค่าเริ่มต้น ปิดเมื่อต้องการวางและตรวจทั้งสอง sync point ก่อนกด **Lock Sync** เอง
 
@@ -633,7 +638,7 @@ Auto Speed จะทำงานเมื่อคลิปมี metadata ข�
    - ปุ่ม **Auto Speed** จะปรากฏถ้ามี metadata
 
 2. **กดปุ่ม Auto Speed:**
-   - ระบบจะคำนวณ: `Record FPS ÷ Timeline FPS`
+   - ระบบจะคำนวณ: `Record FPS ÷ Project FPS`
    - ค่าความเร็วจะถูกใส่ให้อัตโนมัติ
 
 3. **Export:**
@@ -853,6 +858,6 @@ Timecode คือระบบการกำหนด "ที่อยู่เ
 
 ---
 
-**WaveformMatcher v1.4.6**
+**WaveformMatcher v1.4.7**
 สร้างด้วยความช่วยเหลือของ Claude Code และ Codex
 [รายงานปัญหาและดาวน์โหลด](https://github.com/wtembundit/WaveformMatcher)
