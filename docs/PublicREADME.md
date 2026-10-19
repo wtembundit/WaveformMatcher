@@ -6,8 +6,9 @@ macOS app that matches video clips to audio WAV files by comparing waveforms, th
 
 - **Waveform matching** — compares audio fingerprints between video and WAV files to find sync points automatically
 - **Timecode matching** — aligns clips using embedded timecode when available
+- **Open Media Files** — sync video and audio files or folders directly without an FCPXML; WAV timecode and iXML metadata are read natively
 - **Manual sync mode** — opens clips directly in Manual Sync without running waveform or timecode first
-- **Experimental Detect Slate guide** — finds likely slate visible ranges, visual clap guides, and audio clap candidates; saves results in `.wmproj` and can apply them with `Use Detect Slate`
+- **Detect Slate** — a built-in clapperboard detector finds the slate in picture, the frame where the sticks close, and the clap in the WAV (also before sync); saves results in `.wmproj` and can apply them with `Use Detect Slate`
 - **Manual sync points** — distinct video/audio In-point controls with optional Auto Lock, unlock-to-adjust, and Undo
 - **Timeline Detail** — edit a matched pair on one waveform timeline with direct offset dragging, frame nudging, zoom/fit, undo, and per-clip resync
 - **Metadata View** — spreadsheet-style metadata editing with rectangular selection, copy/paste, fill, auto-number, Find & Replace, custom columns, undo/redo, and synced preview
@@ -49,6 +50,10 @@ WaveformMatcher 1.4.6 and later is signed with a Developer ID certificate and no
 - [User Manual (English source)](docs/UserManual.en.md)
 - [คู่มือการใช้งาน (ภาษาไทย)](docs/UserManual.th.md)
 - [User Manual PDF](UserManual.pdf)
+
+## 1.4.8 Release Notes
+
+WaveformMatcher 1.4.8 adds Open Media Files to sync video and audio folders without an FCPXML, with native WAV timecode and iXML metadata. Detect Slate is no longer experimental: built-in models find the slate, the frame where the sticks close on digital and handwritten slates, and the WAV clap, even before a clip is synced, including small slates in wide shots. Synced clips open on the slate, and an optional Detect Slate after sync runs in the background. Command +, Command − and Command 0 zoom whatever the pointer is over, including the video viewer for checking a distant slate. It also adds a status bar with keyboard hints, resizable Sync View columns, a redesigned Metadata Naming editor, source timecode in the transport, background PDF import, in-app updates for future releases, and fixes for lag on clip changes, playback after jumps, and timeline zoom.
 
 ## 1.4.7 Release Notes
 

@@ -91,13 +91,17 @@ When you first open the app, you'll see the main interface divided into 3 sectio
 - **Media Folder**: Folder containing WAV files
 - **Matching Settings**: Sync mode configuration
 - **Metadata**: Opens Metadata View and selects the source policy used for preview/export
-- **Output Setup**: FCPXML type, naming, format, and export options
+- **Output Setup**: export type, naming, format and export options. Export with the button at the bottom of the sidebar, the toolbar, or `Cmd+E`
+- **Start screen**: before a source is loaded, the center of the window offers an FCPXML from your editor or Video + Audio files. Once loaded, the toolbar shows the source; to use different media, start a New Project
 
 #### Main Area
 - **Sync View**: Dual video/audio viewer, metadata inspector, Timeline Detail, and match table
 - **Metadata View**: Editable metadata spreadsheet and Import/Export tools
 - **View Switch**: Use `Cmd+1` for Sync View and `Cmd+2` for Metadata View
-- **Table Scale**: Changes the table size in both views
+- **Table Scale**: Changes the table size in both views (`+` / `-`, or `Cmd++` / `Cmd+-` / `Cmd+0` with the pointer over the table)
+- **Zoom keys**: `Cmd++`, `Cmd+-` and `Cmd+0` (fit) zoom whatever the pointer is over: video viewer, audio waveform, Timeline Detail or table. With the pointer elsewhere they zoom the timeline in Sync View and the table in Metadata View
+- **Column widths**: Drag a Sync View column header edge to resize it; widths are remembered
+- **Status bar**: The bar at the bottom of the window shows the current state (clips, matches, background work) and keyboard hints for the view you are in
 
 ---
 
@@ -121,7 +125,7 @@ Before using WaveformMatcher, you must export data from Final Cut Pro.
 
 ### Step 2 — Import FCPXML into WaveformMatcher
 
-Four methods available:
+Five methods available:
 
 #### Method A — Drag & Drop
 - Drag `.fcpxml` or `.fcpxmld` file onto the **Import** button in the app
@@ -137,6 +141,14 @@ Four methods available:
 
 #### Method D — Open .wmproj File
 - Double-click `.wmproj` file in Finder (for previously saved projects)
+
+#### Method E — Open Media Files (no FCPXML)
+- On the start screen (center of the window), click **Video** and **Audio** (or drop files/folders onto them). Each side keeps only its own file type, so camera and sound folders can be chosen separately; choosing again replaces only that side
+- **File → Open Media Files…** (`Shift+Cmd+I`) accepts both at once and sorts files by extension
+- Folders are searched recursively for MOV, MP4, M4V, MXF video and WAV, AIFF, MP3, M4A, CAF audio
+- Video timecode is read from the QuickTime timecode track. WAV timecode is read from the BWF `bext` time reference (or the iXML timestamp) without FFprobe
+- iXML fills Scene, Take, Reel (Tape), Note, Good Take (Circled) and channel names (as `dialogue.<track name>` roles)
+- Files this Mac cannot read (for example BRAW or R3D) are listed after import. Bring those in through an FCPXML from your editor instead
 
 ### Step 3 — Set Media Folder
 
@@ -244,9 +256,19 @@ For clips in **Review** or **Unmatched**:
 - **Arrow keys**: Step by audio frame
 - **Reset**: Return to default view
 
+**Video Viewer Zoom:**
+- Point at the part of the picture you want to see (for example a small slate in a wide shot), then:
+  - `Cmd++` / `Cmd+-`: Zoom in/out where the pointer is
+  - `Option + Scroll` or pinch on the trackpad: Zoom in/out where the pointer is
+  - Scroll or drag: Move the zoomed picture
+  - `Cmd+0` or click the zoom badge (e.g. `300%`): Fit the whole picture again
+- Zoom resets when you move to another clip
+- The synced preview in Metadata View zooms the same way
+- The audio waveform works the same way: with the pointer over it, `Cmd++` / `Cmd+-`, `Option + Scroll` or pinch zoom where the pointer is, and `Cmd+0` resets it
+
 **Video Seek Bar Controls (Zoom):**
 - **Focus video side**, then press:
-  - `-` / `+`: Zoom seek bar in/out
+  - `Cmd++` / `Cmd+-`: Zoom seek bar in/out (when Timeline Detail is closed and the pointer is not over the picture)
   - `[` / `]`: Pan visible range
   - `0`: Reset to show full clip
 
@@ -307,7 +329,7 @@ Metadata edits become the values used by FCPXML export. Hidden columns are not d
 
 ### Step 8 — Configure Export
 
-Return to left sidebar, **Export Settings** section:
+Return to the left sidebar, **Output Setup** section:
 
 #### Main Settings
 
@@ -506,7 +528,7 @@ Timeline Detail is the clip-by-clip sync editor inside Sync View. It opens by de
 
 - Drag the Audio Match lane horizontally to change the offset.
 - Press `,` or `.` to nudge by one timeline frame; hold Shift for ten frames.
-- Use `Cmd++` / `Cmd+-` to zoom and `Shift+Z` to fit the complete extent.
+- Use `Cmd++` / `Cmd+-` to zoom and `Cmd+0` to fit the complete extent.
 - Use the reset-offset control to return Audio Match to zero offset.
 - One drag becomes one Undo step. The project is marked changed only when the committed value differs.
 - A committed drag/nudge or manually locked marker/slate pair receives the orange **Manual** status while remaining valid for Matched filtering and export.
@@ -521,7 +543,7 @@ Auto Lock is enabled by default. Turn it off when you want to place and inspect 
 
 ## 9. Advanced Features
 
-### 9.1 Detect Slate (Experimental) ⚠️
+### 9.1 Detect Slate
 
 **What is a Film Slate?**
 
@@ -533,11 +555,29 @@ A **Film Slate** (also called **Clapperboard** or **Clapboard**) is a device use
 
 **What is Detect Slate?**
 
-An experimental feature that attempts to automatically find slate/clap points by:
-- **Video side**: Scanning for frames showing the slate board and clapper sticks
-- **Audio side**: Finding the sharp peak of the clap sound
+Finds the slate and clap automatically, in about 2 seconds per clip. All models are built into the app and run on the Mac:
+- **Slate in picture**: A trained clapperboard detector marks the frames where the slate is visible. A board that stays in frame for the whole shot is ignored
+- **Picture clap**: The frame where the sticks close
+  - **Digital (timecode) slates**: the app reads the timecode display until it freezes
+  - **Handwritten slates**: an open/closed stick detector finds the first frame the sticks are shut
+- **Audio clap**: The clap in the WAV, taken right at the picture clap
 
-⚠️ **Warning:** This feature is still experimental — **always review before using**
+Detect Slate is a guide: review the result before you lock sync. When a take has no audible clap, only the slate in picture is marked.
+
+**Clips that are not synced yet**
+
+Detect Slate also works on clips that Waveform or Timecode could not sync:
+- **Digital slate**: The frozen slate timecode is the WAV timecode of the clap, so the app finds the clap in the WAV from it
+- **Timecode offset**: If the video and WAV both have timecode, the app uses that offset to look for the clap
+- **Otherwise**: A built-in clap sound detector ranks claps in the WAV. The best one is used, and the top three are listed under **WAV clap candidates** in the ◎ menu so you can try another
+
+In the inspector, the **FIND** row holds Detect Slate and the ◎ menu (Use Detect Slate, marker pairs, WAV clap candidates); the **LOCK** row holds Auto Lock and Lock Sync.
+
+**After sync**
+
+- When Waveform or Timecode sync finishes, the app looks for the clap in each synced clip's WAV in the background (about 0.2 s a clip). Selecting a synced clip then opens it on the slate, so you can check the sync straight away. This guess comes from the sound alone: it looks for the short, sharp sound of the sticks within the first and last 8 seconds of the clip, and lands on another sound about one time in five; it only places the playhead and never changes the sync.
+- Tick **Detect Slate after sync** under the Start button to also run Detect Slate on every synced clip in the background (about 3 s a clip). Selecting a clip then opens on the clap found in picture. Leave it off when you do not need it.
+- The status bar shows the background work and its progress; click its ✕ to stop it (results so far are kept). Results are saved with the project.
 
 #### How to Use Detect Slate
 
@@ -690,6 +730,9 @@ WaveformMatcher project file used to save work-in-progress for later continuatio
 | Export FCPXML | `Cmd+E` |
 | Save project | `Cmd+S` |
 | Open project | `Cmd+O` |
+| Open Media Files | `Shift+Cmd+I` |
+| Viewer fullscreen | `Shift+Cmd+F` |
+| User Manual | `Shift+Cmd+/` |
 | Sync View / Metadata View | `Cmd+1` / `Cmd+2` |
 | Show/Hide Sidebar | `Cmd+3` |
 | Focus Search | `Option+F` |
@@ -710,18 +753,27 @@ WaveformMatcher project file used to save work-in-progress for later continuatio
 | Action | Shortcut |
 |--------|----------|
 | Pan waveform (Left/Right) | `Shift + Scroll` |
-| Zoom waveform (In/Out) | `Option + Scroll` |
+| Zoom waveform (In/Out) | `Option + Scroll`, pinch, or `Cmd++` / `Cmd+-` with the pointer over it |
 | Snap while dragging | Hold `Shift` |
 | Audio frame step (Left) | `←` (Left Arrow) |
 | Audio frame step (Right) | `→` (Right Arrow) |
 | Reset zoom | `Reset` button |
 
+### Video Viewer
+
+| Action | Shortcut |
+|--------|----------|
+| Zoom in / out (pointer over the viewer) | `Cmd++` / `Cmd+-` |
+| Zoom where the pointer is | `Option + Scroll` or pinch |
+| Move the zoomed picture | Scroll or drag |
+| Fit picture | `Cmd+0` |
+
 ### Video Seek Bar
 
 | Action | Shortcut |
 |--------|----------|
-| Zoom in | `-` (Minus) |
-| Zoom out | `+` (Plus) |
+| Zoom in | `Cmd++` |
+| Zoom out | `Cmd+-` |
 | Pan left | `[` (Left Bracket) |
 | Pan right | `]` (Right Bracket) |
 | Reset view | `0` (Zero) |
@@ -754,7 +806,7 @@ WaveformMatcher project file used to save work-in-progress for later continuatio
 | Find & Replace | `Cmd+F` |
 | Open/close synced preview | `Space` |
 | Raw media Quick Look | `Option+Space` |
-| Table zoom in / out / reset | `Option++` / `Option+-` / `Option+0` |
+| Table zoom in / out / reset | `+` / `-`, or `Cmd++` / `Cmd+-` / `Cmd+0` with the pointer over the table |
 
 ### Timeline Detail
 
@@ -763,7 +815,8 @@ WaveformMatcher project file used to save work-in-progress for later continuatio
 | Nudge Audio Match one frame | `,` / `.` |
 | Nudge Audio Match ten frames | `Shift+,` / `Shift+.` |
 | Timeline zoom in / out | `Cmd++` / `Cmd+-` |
-| Fit timeline | `Shift+Z` |
+| Fit timeline | `Cmd+0` |
+| Zoom / pan | `Option + Scroll` or pinch / sideways scroll |
 | Close Timeline Detail | `Esc` |
 
 The complete searchable list is available from **Help → Keyboard Shortcuts…**.
@@ -858,6 +911,6 @@ Timecode is a system for assigning "time addresses" (Hours:Minutes:Seconds:Frame
 
 ---
 
-**WaveformMatcher v1.4.7**
+**WaveformMatcher v1.4.8**
 Built with assistance from Claude Code and Codex
 [Report Issues and Downloads](https://github.com/wtembundit/WaveformMatcher)

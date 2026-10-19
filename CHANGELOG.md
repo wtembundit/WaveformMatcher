@@ -1,5 +1,56 @@
 # Changelog
 
+## 1.4.8
+
+### Added
+
+- Added Open Media Files: sync video and audio files or folders directly, without exporting an FCPXML first
+- Video and Audio have separate source buttons, so camera and sound folders can be chosen independently
+- WAV timecode is read natively from BWF `bext` and iXML, so Timecode mode no longer needs FFprobe for WAV files that lack an FCPXML start value
+- iXML Scene, Take, Tape, Note, Circled and track names now fill Scene, Take, Reel, Note, Good Take and audio roles for directly opened audio
+- Added a status bar at the bottom of the window with the current state and keyboard hints for the active view
+- Sync View columns can be resized by dragging their headers; widths are remembered
+- Check for Updates can now download and install new versions from inside the app (Sparkle), starting with the release after 1.4.8
+- Command +, Command − and Command 0 zoom in, zoom out and fit whatever the pointer is over: video viewer, audio waveform, Timeline Detail, the Sync View table or the Metadata table (with the pointer elsewhere: the timeline in Sync View, the table in Metadata View). Plain + / − still zoom the table
+- The video viewer zooms in to check small or distant slates: Command + / Command − and Command 0 with the pointer over the viewer, Option-scroll, or pinch; it zooms where the pointer is, scroll or drag moves the picture, and the zoom badge returns to fit. The synced preview in Metadata View zooms the same way
+- Pinch zooms the waveforms, the video scrub bar and Timeline Detail; Timeline Detail also zooms with Option-scroll and pans with sideways scroll
+- The audio waveform zooms where the pointer is: Command + / Command − and Command 0 with the pointer over it, Option-scroll, or pinch
+
+### Changed
+
+- Fit Timeline moved from Shift Z to Command 0, the same key that fits every other view
+- Detect Slate is no longer experimental: a built-in clapperboard detector (Core ML, runs on the Mac) finds the slate in picture in about 2 s per clip. A WAV transient outside the slate is no longer taken as the clap, and still boards that sit in frame for the whole shot are ignored
+- Detect Slate finds the clap where the clapper sticks close: digital slates by reading the timecode until it freezes, handwritten slates with a built-in open/closed stick detector; the WAV clap is then taken right at that frame
+- Selecting a synced clip opens it on the slate: on the Detect Slate clap, or on a clap guessed from the WAV right after sync (the short, sharp sound of the sticks near the clip's start or end, in the background)
+- Added Detect Slate after sync, a checkbox under the Start button (off by default) that runs Detect Slate on every synced clip in the background; the status bar shows background work and its progress, with a ✕ to stop it
+- Temporary files (monitor mixes, FCPXML hand-offs) are cleared when a project closes and at launch
+- Detect Slate also finds the WAV clap before a clip is synced: from the frozen timecode on digital slates, from the clip's timecode offset when available, otherwise from a built-in clap sound detector, with the top three candidates to choose from in the ◎ menu
+- The inspector shows Detect Slate results as FIND and LOCK rows, and is more compact, with short fields side by side
+- Detect Slate now sits in front of Auto Lock, with an icon and text
+- Choosing the source moved from the sidebar to the start screen in the center of the window; the toolbar shows the loaded source
+- The sidebar keeps a fixed width and shows the full naming template
+- Redesigned the Metadata Naming editor with a live example name
+- Scene, Take, Speed and Rec FPS can be edited directly in the Sync View table (double-click)
+- PDF metadata import runs in the background with a progress panel, and each page is read with OCR only once
+- The transport and the Timeline Detail ruler show the clip's source timecode, matching the sync clip in Final Cut Pro; time from the clip start stays beside it
+- The Offset column shows a full timecode on one line
+- Metadata View scrolls and edits faster with large projects
+
+### Fixed
+
+- Changing clips could freeze the app for several seconds
+- Playback stopped after jumping to a sync point or scrubbing; it now continues
+- Zooming the Timeline Detail drew the audio waveform out of step with the video
+- After dragging in Timeline Detail, derived sync points still showed on the timeline
+- Timeline Detail showed extra slate ranges before and after the real slate after Detect Slate
+- Detect Slate marked a slate range on clips with no clapperboard (car windows, seats, set pieces); only the built-in slate detector is used now, and when it finds no slate in the full frame it looks again zoomed in, to find small slates in wide shots. Detect Slate results saved by earlier versions are cleared when a project opens, so Detect Slate scans again
+- A closed project reappeared when opening a new source
+- Speed and Rec FPS naming tokens were always empty; they now appear unless Speed is 100% or Rec FPS equals the timeline FPS
+- Switching between Sync View and Metadata View now scrolls to the selected clip
+- Quick Preview in Metadata View sometimes stayed stopped for clips with multichannel audio
+- The Timeline Detail camera waveform loaded slowly for media on external drives
+- Fixed QuickTime timecode reads that returned no timecode when the first timecode sample buffer was empty, and that used the timecode track's sample rate instead of the video frame rate
+
 ## 1.4.7
 
 ### Added

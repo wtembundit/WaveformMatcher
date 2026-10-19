@@ -91,13 +91,17 @@ WaveformMatcher 1.4.6 เป็นต้นไปเซ็นด้วย Develo
 - **Media Folder**: โฟลเดอร์ที่เก็บไฟล์ WAV
 - **Matching Settings**: ตั้งค่าโหมดการซิงค์
 - **Metadata**: เปิด Metadata View และเลือก source สำหรับ preview/export
-- **Output Setup**: รูปแบบ FCPXML การตั้งชื่อ format และตัวเลือกส่งออก
+- **ตั้งค่า Output**: รูปแบบ การตั้งชื่อ format และตัวเลือกส่งออก กด export ได้จากปุ่มล่างสุดของแผงซ้าย, toolbar หรือ `Cmd+E`
+- **หน้าเริ่มต้น**: ก่อนโหลดไฟล์ พื้นที่กลางหน้าต่างจะให้เลือก FCPXML จากโปรแกรมตัดต่อ หรือไฟล์ Video + Audio เมื่อโหลดแล้ว toolbar จะแสดงแหล่งไฟล์ ถ้าต้องการใช้ media ชุดอื่นให้เริ่ม New Project
 
 #### พื้นที่หลัก (Main Area)
 - **Sync View**: Video/Audio viewer, inspector, Timeline Detail และตารางผล sync
 - **Metadata View**: ตารางแก้ metadata และเครื่องมือ Import/Export
 - **สลับ View**: `Cmd+1` เปิด Sync View และ `Cmd+2` เปิด Metadata View
-- **Table Scale**: ปรับขนาดตารางร่วมกันทั้งสอง view
+- **Table Scale**: ปรับขนาดตารางร่วมกันทั้งสอง view (`+` / `-` หรือ `Cmd++` / `Cmd+-` / `Cmd+0` เมื่อชี้เมาส์ที่ตาราง)
+- **ปุ่ม zoom**: `Cmd++`, `Cmd+-` และ `Cmd+0` (แสดงเต็ม) zoom สิ่งที่ชี้เมาส์อยู่: ภาพ video, waveform เสียง, Timeline Detail หรือตาราง ถ้าไม่ได้ชี้ที่ใด จะ zoom timeline ใน Sync View และตารางใน Metadata View
+- **ความกว้างคอลัมน์**: ลากขอบหัวคอลัมน์ใน Sync View เพื่อปรับความกว้าง แอปจะจำค่าไว้
+- **Status bar**: แถบด้านล่างหน้าต่างแสดงสถานะปัจจุบัน (จำนวนคลิป ผล match งานที่ทำอยู่เบื้องหลัง) และ keyboard hint ของ view ที่ใช้งานอยู่
 
 ---
 
@@ -121,7 +125,7 @@ WaveformMatcher 1.4.6 เป็นต้นไปเซ็นด้วย Develo
 
 ### ขั้นตอนที่ 2 — Import FCPXML เข้า WaveformMatcher
 
-มี 4 วิธี:
+มี 5 วิธี:
 
 #### วิธี A — ลากไฟล์วาง (Drag & Drop)
 - ลากไฟล์ `.fcpxml` หรือ `.fcpxmld` มาวางที่ปุ่ม **Import** ในแอป
@@ -137,6 +141,14 @@ WaveformMatcher 1.4.6 เป็นต้นไปเซ็นด้วย Develo
 
 #### วิธี D — เปิดไฟล์ .wmproj
 - ดับเบิลคลิกที่ไฟล์ `.wmproj` ใน Finder (สำหรับงานที่เคยบันทึกไว้)
+
+#### วิธี E — เปิดไฟล์ Media โดยตรง (ไม่ต้องมี FCPXML)
+- ที่หน้าเริ่มต้น (กลางหน้าต่าง) กดปุ่ม **Video** และ **Audio** (หรือลากไฟล์/โฟลเดอร์มาวาง) แต่ละปุ่มรับเฉพาะไฟล์ประเภทของตัวเอง จึงเลือกโฟลเดอร์กล้องและโฟลเดอร์เสียงแยกกันได้ และการเลือกใหม่จะแทนที่เฉพาะฝั่งนั้น
+- **File → เปิดไฟล์ Media…** (`Shift+Cmd+I`) เลือกรวมกันได้ แอปจะแยกประเภทตามนามสกุลไฟล์ให้
+- แอปค้นหาไฟล์ในโฟลเดอร์ย่อยทั้งหมด รองรับ video แบบ MOV, MP4, M4V, MXF และ audio แบบ WAV, AIFF, MP3, M4A, CAF
+- timecode ของ video อ่านจาก QuickTime timecode track ส่วน timecode ของ WAV อ่านจาก BWF `bext` (หรือ timestamp ใน iXML) โดยไม่ต้องใช้ FFprobe
+- ข้อมูล iXML จะเติม Scene, Take, Reel (Tape), Note, Good Take (Circled) และชื่อ channel (เป็น role `dialogue.<ชื่อ track>`)
+- ไฟล์ที่เครื่องนี้อ่านไม่ได้ (เช่น BRAW หรือ R3D) จะแจ้งรายการหลัง import ให้นำเข้าไฟล์เหล่านั้นผ่าน FCPXML จากโปรแกรมตัดต่อแทน
 
 ### ขั้นตอนที่ 3 — ตั้งค่า Media Folder
 
@@ -244,9 +256,19 @@ WaveformMatcher 1.4.6 เป็นต้นไปเซ็นด้วย Develo
 - **ปุ่มลูกศร**: เลื่อนทีละ audio frame
 - **Reset**: กลับไปมุมมองเริ่มต้น
 
+**Zoom ภาพในช่อง Video:**
+- ชี้เมาส์ไปยังส่วนที่ต้องการดู (เช่น slate เล็ก ๆ ในช็อตกว้าง) แล้ว:
+  - `Cmd++` / `Cmd+-`: zoom เข้า/ออก ตรงตำแหน่งที่ชี้
+  - `Option + Scroll` หรือ pinch บน trackpad: zoom เข้า/ออก ตรงตำแหน่งที่ชี้
+  - Scroll หรือลาก: เลื่อนภาพที่ zoom อยู่
+  - `Cmd+0` หรือคลิกป้าย zoom (เช่น `300%`): กลับมาแสดงภาพเต็ม
+- เปลี่ยนคลิปแล้ว zoom จะกลับเป็นภาพเต็ม
+- ภาพ preview ใน Metadata View zoom ได้แบบเดียวกัน
+- Waveform เสียงใช้แบบเดียวกัน: ชี้เมาส์ที่ waveform แล้วใช้ `Cmd++` / `Cmd+-`, `Option + Scroll` หรือ pinch เพื่อ zoom ตรงตำแหน่งที่ชี้ และ `Cmd+0` เพื่อ reset
+
 **ควบคุม Video Seek Bar (การ zoom):**
 - **Focus ฝั่ง video** แล้วกด:
-  - `-` / `+`: Zoom seek bar เข้า/ออก
+  - `Cmd++` / `Cmd+-`: Zoom seek bar เข้า/ออก (เมื่อปิด Timeline Detail อยู่ และไม่ได้ชี้เมาส์ที่ภาพ)
   - `[` / `]`: เลื่อนช่วงที่กำลังดู (Pan)
   - `0`: Reset กลับเห็นทั้งคลิป
 
@@ -307,7 +329,7 @@ WaveformMatcher 1.4.6 เป็นต้นไปเซ็นด้วย Develo
 
 ### ขั้นตอนที่ 8 — ตั้งค่า Export
 
-กลับมาที่แผงซ้าย ส่วน **Export Settings**:
+กลับมาที่แผงซ้าย ส่วน **ตั้งค่า Output**:
 
 #### การตั้งค่าหลัก
 
@@ -506,7 +528,7 @@ Timeline Detail คือหน้าปรับ sync รายคลิปใ�
 
 - ลาก Audio Match ซ้าย/ขวาเพื่อเปลี่ยน offset
 - กด `,` หรือ `.` เพื่อขยับหนึ่ง timeline frame; กด Shift ร่วมเพื่อขยับสิบ frame
-- ใช้ `Cmd++` / `Cmd+-` เพื่อ zoom และ `Shift+Z` เพื่อ fit ทั้งช่วง
+- ใช้ `Cmd++` / `Cmd+-` เพื่อ zoom และ `Cmd+0` เพื่อ fit ทั้งช่วง
 - ปุ่ม reset offset จะคืน Audio Match ไปที่ offset ศูนย์
 - หนึ่ง drag นับเป็น Undo หนึ่งครั้ง และ project จะ dirty เมื่อค่าหลังจบ drag เปลี่ยนจริง
 - การลาก/nudge ที่ commit หรือ lock marker/slate pair ด้วยมือจะแสดงสถานะ **Manual** สีส้ม แต่ยังถือว่า matched และ export ได้
@@ -521,7 +543,7 @@ Auto Lock เปิดเป็นค่าเริ่มต้น ปิดเ
 
 ## 9. ฟีเจอร์เสริม
 
-### 9.1 Detect Slate (Experimental) ⚠️
+### 9.1 Detect Slate
 
 **Slate (กระดานกำกับช็อต) คืออะไร?**
 
@@ -533,11 +555,29 @@ Auto Lock เปิดเป็นค่าเริ่มต้น ปิดเ
 
 **Detect Slate คืออะไร?**
 
-เป็นฟีเจอร์ทดลอง (Experimental) ที่พยายามหาจุด slate/clap อัตโนมัติโดย:
-- **ฝั่งวิดีโอ**: สแกนหาช่วงที่เห็นกระดาน slate และไม้ตี
-- **ฝั่งเสียง**: หา peak ของเสียง clap ที่ชัดเจน
+หาจุด slate และ clap ให้อัตโนมัติ ใช้เวลาประมาณ 2 วินาทีต่อคลิป โมเดลทั้งหมดอยู่ในแอปและประมวลผลบน Mac:
+- **Slate ในภาพ**: โมเดลตรวจจับกระดาน clapper หาเฟรมที่เห็น slate กระดานที่ตั้งอยู่ในเฟรมตลอดทั้งช็อตจะไม่ถูกนับ
+- **Clap ในภาพ**: เฟรมที่ไม้ clapper ปิด
+  - **Slate ดิจิทัล (มี timecode)**: แอปอ่าน timecode บนจอจนกว่าจะหยุดนิ่ง
+  - **Slate เขียนมือ**: โมเดลแยกไม้เปิด/ปิด หาเฟรมแรกที่ไม้ปิดสนิท
+- **Clap ในเสียง**: หา clap ใน WAV ตรงกับเฟรม clap ในภาพ
 
-⚠️ **คำเตือน:** ฟีเจอร์นี้ยังอยู่ระหว่างการทดลอง — **ควรตรวจสอบทุกครั้งก่อนใช้**
+Detect Slate เป็น guide ควรตรวจผลก่อน lock sync ถ้าเทคนั้นไม่มีเสียง clap ชัดเจน จะ mark เฉพาะ slate ในภาพ
+
+**คลิปที่ยังไม่ได้ sync**
+
+Detect Slate ใช้ได้กับคลิปที่ Waveform หรือ Timecode sync ไม่ได้ด้วย:
+- **Slate ดิจิทัล**: timecode ที่หยุดนิ่งบน slate คือ timecode ของ clap ใน WAV แอปจึงหา clap ใน WAV จากค่านี้
+- **Timecode offset**: ถ้าวิดีโอและ WAV มี timecode ทั้งคู่ แอปใช้ offset นั้นหา clap
+- **กรณีอื่น**: ตัวตรวจจับเสียง clap ในแอปจัดอันดับ clap ใน WAV ใช้อันดับแรก และแสดง 3 อันดับแรกใน **WAV clap candidates** ในเมนู ◎ ให้เลือกตัวอื่นได้
+
+ใน Inspector แถว **FIND** มีปุ่ม Detect Slate และเมนู ◎ (Use Detect Slate, marker pair, WAV clap candidates) ส่วนแถว **LOCK** มี Auto Lock และ Lock Sync
+
+**หลัง sync**
+
+- เมื่อ sync แบบ Waveform หรือ Timecode เสร็จ แอปจะหา clap ใน WAV ของทุกคลิปที่ sync แล้วเบื้องหลัง (ประมาณ 0.2 วินาทีต่อคลิป) เมื่อเลือกคลิปที่ sync แล้ว playhead จะไปอยู่ที่ slate ให้ตรวจ sync ได้ทันที ค่านี้เดาจากเสียงอย่างเดียว โดยหาเสียงสั้นและคมของไม้ slate ใน 8 วินาทีแรกและสุดท้ายของคลิป ผิดประมาณ 1 ใน 5 คลิป ใช้แค่วาง playhead ไม่เปลี่ยนค่า sync
+- ติ๊ก **Detect Slate หลัง sync** ใต้ปุ่ม Start เพื่อให้ Detect Slate ทุกคลิปที่ sync แล้วเบื้องหลังด้วย (ประมาณ 3 วินาทีต่อคลิป) เมื่อเลือกคลิปจะไปที่ clap ที่หาจากภาพ ถ้าไม่จำเป็นก็ปิดไว้ได้
+- Status bar แสดงงานเบื้องหลังและความคืบหน้า กด ✕ เพื่อหยุด (ผลที่ได้แล้วยังเก็บไว้) ผลลัพธ์บันทึกไปกับโปรเจกต์
 
 #### วิธีใช้ Detect Slate
 
@@ -690,6 +730,9 @@ Auto Speed จะทำงานเมื่อคลิปมี metadata ข�
 | Export FCPXML | `Cmd+E` |
 | Save project | `Cmd+S` |
 | Open project | `Cmd+O` |
+| Open Media Files | `Shift+Cmd+I` |
+| Viewer เต็มจอ | `Shift+Cmd+F` |
+| คู่มือการใช้งาน | `Shift+Cmd+/` |
 | Sync View / Metadata View | `Cmd+1` / `Cmd+2` |
 | แสดง/ซ่อน Sidebar | `Cmd+3` |
 | Focus ช่อง Search | `Option+F` |
@@ -710,18 +753,27 @@ Auto Speed จะทำงานเมื่อคลิปมี metadata ข�
 | Action | Shortcut |
 |--------|----------|
 | Pan waveform (ซ้าย/ขวา) | `Shift + Scroll` |
-| Zoom waveform (in/out) | `Option + Scroll` |
+| Zoom waveform (in/out) | `Option + Scroll`, pinch หรือ `Cmd++` / `Cmd+-` เมื่อชี้เมาส์ที่ waveform |
 | Snap ขณะลาก | ค้าง `Shift` |
 | Audio frame step (ซ้าย) | `←` (Left Arrow) |
 | Audio frame step (ขวา) | `→` (Right Arrow) |
 | Reset zoom | `Reset` button |
 
+### Video Viewer
+
+| Action | Shortcut |
+|--------|----------|
+| Zoom เข้า / ออก (ชี้เมาส์ที่ภาพ) | `Cmd++` / `Cmd+-` |
+| Zoom ตรงตำแหน่งที่ชี้ | `Option + Scroll` หรือ pinch |
+| เลื่อนภาพที่ zoom อยู่ | Scroll หรือลาก |
+| แสดงภาพเต็ม | `Cmd+0` |
+
 ### Video Seek Bar
 
 | Action | Shortcut |
 |--------|----------|
-| Zoom in | `-` (Minus) |
-| Zoom out | `+` (Plus) |
+| Zoom in | `Cmd++` |
+| Zoom out | `Cmd+-` |
 | Pan left | `[` (Left Bracket) |
 | Pan right | `]` (Right Bracket) |
 | Reset view | `0` (Zero) |
@@ -754,7 +806,7 @@ Auto Speed จะทำงานเมื่อคลิปมี metadata ข�
 | Find & Replace | `Cmd+F` |
 | เปิด/ปิด synced preview | `Space` |
 | Quick Look raw media | `Option+Space` |
-| Table zoom เข้า / ออก / reset | `Option++` / `Option+-` / `Option+0` |
+| Table zoom เข้า / ออก / reset | `+` / `-` หรือ `Cmd++` / `Cmd+-` / `Cmd+0` เมื่อชี้เมาส์ที่ตาราง |
 
 ### Timeline Detail
 
@@ -763,7 +815,8 @@ Auto Speed จะทำงานเมื่อคลิปมี metadata ข�
 | Nudge Audio Match หนึ่ง frame | `,` / `.` |
 | Nudge Audio Match สิบ frame | `Shift+,` / `Shift+.` |
 | Timeline zoom เข้า / ออก | `Cmd++` / `Cmd+-` |
-| Fit timeline | `Shift+Z` |
+| Fit timeline | `Cmd+0` |
+| Zoom / เลื่อน | `Option + Scroll` หรือ pinch / scroll แนวนอน |
 | ปิด Timeline Detail | `Esc` |
 
 ดูรายการทั้งหมดแบบค้นหาได้จาก **Help → Keyboard Shortcuts…**
@@ -858,6 +911,6 @@ Timecode คือระบบการกำหนด "ที่อยู่เ
 
 ---
 
-**WaveformMatcher v1.4.7**
+**WaveformMatcher v1.4.8**
 สร้างด้วยความช่วยเหลือของ Claude Code และ Codex
 [รายงานปัญหาและดาวน์โหลด](https://github.com/wtembundit/WaveformMatcher)
