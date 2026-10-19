@@ -92,7 +92,7 @@ When you first open the app, you'll see the main interface divided into 3 sectio
 - **Matching Settings**: Sync mode configuration
 - **Metadata**: Opens Metadata View and selects the source policy used for preview/export
 - **Output Setup**: export type, naming, format and export options. Export with the button at the bottom of the sidebar, the toolbar, or `Cmd+E`
-- **Start screen**: before a source is loaded, the center of the window offers an FCPXML from your editor or Video + Audio files. Once loaded, the toolbar shows the source; to use different media, start a New Project
+- **Start screen**: before a source is loaded, the center of the window offers an FCPXML from your editor or Video + Audio files, and **Open Project…** to continue a saved `.wmproj`. Once loaded, the toolbar shows the source; to use different media, start a New Project
 
 #### Main Area
 - **Sync View**: Dual video/audio viewer, metadata inspector, Timeline Detail, and match table
@@ -470,9 +470,11 @@ Auto Speed calculates `Rec FPS ÷ Project FPS × 100`.
 
 ### 7.5 Synced Preview
 
-- Press `Space` to open or close the in-app synced preview for the active row.
+- Press `Space` to open the synced preview for the active row, paused on the clip's clap; press `Space` again to play. It opens as a floating mini player window that stays on top: move it anywhere (another screen too) and resize it from any edge, and keep editing table cells while it plays. It remembers its place and size.
+- While it is open: `Space` plays or pauses, `J` / `K` / `L` shuttle (press again to go faster), `←` / `→` step one frame, `↑` / `↓` change row, and `Esc` closes it. Changing clip keeps playing, or stays paused when you had paused. While you type in a cell, the keys go to the cell.
+- The mini player opens each clip on its sync point or slate clap, as Sync View does, and shows the clip's source timecode. The full-screen button (or `Shift+Cmd+F`) plays it full screen. `Cmd++` / `Cmd+-` / `Cmd+0`, `Option + Scroll` and pinch zoom its picture.
 - The preview uses the stored WFM offset and a stereo monitor mix for multichannel WAV playback; export still retains the original multichannel audio.
-- Use the arrow keys to move through visible rows while the preview follows the active clip.
+- The preview follows the active row: click a row or use `↑` / `↓`.
 - The scrub bar shows FCP markers, manual sync points, slate guides, and slate visible ranges when available.
 - Press `Option+Space` only when a raw Finder Quick Look reference is needed.
 
@@ -804,7 +806,8 @@ WaveformMatcher project file used to save work-in-progress for later continuatio
 | Fill down / Auto-number | `Option+D` / `Option+N` |
 | Clear / Reset selected | `Cmd+Delete` / `Cmd+R` |
 | Find & Replace | `Cmd+F` |
-| Open/close synced preview | `Space` |
+| Open synced preview (mini player) | `Space` |
+| Mini player: play/pause · shuttle · frame step · close | `Space` · `J` `K` `L` · `←` `→` · `Esc` |
 | Raw media Quick Look | `Option+Space` |
 | Table zoom in / out / reset | `+` / `-`, or `Cmd++` / `Cmd+-` / `Cmd+0` with the pointer over the table |
 
@@ -911,6 +914,6 @@ Timecode is a system for assigning "time addresses" (Hours:Minutes:Seconds:Frame
 
 ---
 
-**WaveformMatcher v1.4.8**
+**WaveformMatcher v1.4.9**
 Built with assistance from Claude Code and Codex
 [Report Issues and Downloads](https://github.com/wtembundit/WaveformMatcher)

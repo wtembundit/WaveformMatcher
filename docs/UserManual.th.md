@@ -92,7 +92,7 @@ WaveformMatcher 1.4.6 เป็นต้นไปเซ็นด้วย Develo
 - **Matching Settings**: ตั้งค่าโหมดการซิงค์
 - **Metadata**: เปิด Metadata View และเลือก source สำหรับ preview/export
 - **ตั้งค่า Output**: รูปแบบ การตั้งชื่อ format และตัวเลือกส่งออก กด export ได้จากปุ่มล่างสุดของแผงซ้าย, toolbar หรือ `Cmd+E`
-- **หน้าเริ่มต้น**: ก่อนโหลดไฟล์ พื้นที่กลางหน้าต่างจะให้เลือก FCPXML จากโปรแกรมตัดต่อ หรือไฟล์ Video + Audio เมื่อโหลดแล้ว toolbar จะแสดงแหล่งไฟล์ ถ้าต้องการใช้ media ชุดอื่นให้เริ่ม New Project
+- **หน้าเริ่มต้น**: ก่อนโหลดไฟล์ พื้นที่กลางหน้าต่างจะให้เลือก FCPXML จากโปรแกรมตัดต่อ หรือไฟล์ Video + Audio และปุ่ม **เปิดโปรเจกต์…** เพื่อทำ `.wmproj` ที่บันทึกไว้ต่อ เมื่อโหลดแล้ว toolbar จะแสดงแหล่งไฟล์ ถ้าต้องการใช้ media ชุดอื่นให้เริ่ม New Project
 
 #### พื้นที่หลัก (Main Area)
 - **Sync View**: Video/Audio viewer, inspector, Timeline Detail และตารางผล sync
@@ -470,9 +470,11 @@ Auto Speed คำนวณ `Rec FPS ÷ Project FPS × 100`
 
 ### 7.5 Synced Preview
 
-- กด `Space` เพื่อเปิด/ปิด in-app synced preview ของแถว active
+- กด `Space` เพื่อเปิด synced preview ของแถว active โดยหยุดรออยู่ที่ clap ของคลิป กด `Space` อีกครั้งเพื่อเล่น เปิดเป็นหน้าต่าง mini player ลอยอยู่ด้านบน ย้ายไปที่ไหนก็ได้ (รวมถึงจออื่น) ปรับขนาดได้ทุกด้าน และแก้ไขข้อความในตารางไปพร้อมกับดูวิดีโอได้ แอปจำตำแหน่งและขนาดไว้
+- ระหว่างเปิด: `Space` เล่น/หยุด, `J` / `K` / `L` เดินหน้า-ถอยหลัง (กดซ้ำเพื่อเร็วขึ้น), `←` / `→` ทีละเฟรม, `↑` / `↓` เปลี่ยนแถว และ `Esc` ปิด เปลี่ยนคลิปแล้วจะเล่นต่อหรือหยุดตามสถานะเดิม ระหว่างพิมพ์ในช่อง ปุ่มจะไปที่ช่องนั้น
+- Mini player เปิดแต่ละคลิปที่จุด sync หรือ clap ของ slate แบบเดียวกับ Sync View และแสดง source timecode ของคลิป ปุ่มเต็มจอ (หรือ `Shift+Cmd+F`) เล่นแบบเต็มจอ และ zoom ภาพได้ด้วย `Cmd++` / `Cmd+-` / `Cmd+0`, `Option + Scroll` หรือ pinch
 - Preview ใช้ offset ที่ WFM บันทึกและทำ stereo monitor mix สำหรับ WAV หลาย channel โดยไฟล์ export ยังเก็บ multichannel ต้นฉบับ
-- ใช้ปุ่มลูกศรเลื่อนคลิปใน visible rows และ preview จะตาม active row
+- Preview จะตาม active row: คลิกแถวหรือใช้ `↑` / `↓`
 - Scrub bar แสดง FCP marker, manual sync point, slate guide และ slate visible range เมื่อมี
 - ใช้ `Option+Space` เมื่อต้องการดู raw file ด้วย Quick Look เท่านั้น
 
@@ -804,7 +806,8 @@ Auto Speed จะทำงานเมื่อคลิปมี metadata ข�
 | Fill down / Auto-number | `Option+D` / `Option+N` |
 | Clear / Reset selected | `Cmd+Delete` / `Cmd+R` |
 | Find & Replace | `Cmd+F` |
-| เปิด/ปิด synced preview | `Space` |
+| เปิด synced preview (mini player) | `Space` |
+| Mini player: เล่น/หยุด · J K L · ทีละเฟรม · ปิด | `Space` · `J` `K` `L` · `←` `→` · `Esc` |
 | Quick Look raw media | `Option+Space` |
 | Table zoom เข้า / ออก / reset | `+` / `-` หรือ `Cmd++` / `Cmd+-` / `Cmd+0` เมื่อชี้เมาส์ที่ตาราง |
 
@@ -911,6 +914,6 @@ Timecode คือระบบการกำหนด "ที่อยู่เ
 
 ---
 
-**WaveformMatcher v1.4.8**
+**WaveformMatcher v1.4.9**
 สร้างด้วยความช่วยเหลือของ Claude Code และ Codex
 [รายงานปัญหาและดาวน์โหลด](https://github.com/wtembundit/WaveformMatcher)

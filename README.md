@@ -51,6 +51,10 @@ WaveformMatcher 1.4.6 and later is signed with a Developer ID certificate and no
 - [คู่มือการใช้งาน (ภาษาไทย)](docs/UserManual.th.md)
 - [User Manual PDF](UserManual.pdf)
 
+## 1.4.9 Release Notes
+
+WaveformMatcher 1.4.9 turns the Metadata View synced preview into a floating mini player window, like Picture in Picture, so cells can be edited while it plays; it moves and resizes freely and takes Space, J/K/L and frame-step keys, with Esc to close. The mini player opens each clip on its clap or sync point, shows source timecode, plays full screen and zooms. The start screen adds Open Project. It also fixes the Metadata Naming separator and Find & Replace buttons running past their windows' edges.
+
 ## 1.4.8 Release Notes
 
 WaveformMatcher 1.4.8 adds Open Media Files to sync video and audio folders without an FCPXML, with native WAV timecode and iXML metadata. Detect Slate is no longer experimental: built-in models find the slate, the frame where the sticks close on digital and handwritten slates, and the WAV clap, even before a clip is synced, including small slates in wide shots. Synced clips open on the slate, and an optional Detect Slate after sync runs in the background. Command +, Command − and Command 0 zoom whatever the pointer is over, including the video viewer for checking a distant slate. It also adds a status bar with keyboard hints, resizable Sync View columns, a redesigned Metadata Naming editor, source timecode in the transport, background PDF import, in-app updates for future releases, and fixes for lag on clip changes, playback after jumps, and timeline zoom.

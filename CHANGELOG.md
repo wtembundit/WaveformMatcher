@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.4.9
+
+### Added
+
+- The start screen has Open Project… to continue a saved project (.wmproj)
+
+### Changed
+
+- The synced preview in Metadata View is now a floating mini player window, like Picture in Picture: move it anywhere (another screen too), resize it freely, and keep editing table cells while it plays. It stays on top, remembers its place and size, and follows the active row
+- While the mini player is open: Space plays or pauses, J/K/L shuttle, Left/Right step a frame, Up/Down change row, Esc closes it (Space opens it, paused). Changing clip keeps playing or stays paused
+- The mini player opens each clip on its clap or sync point, as Sync View does, shows the source timecode, plays full screen (button or Shift Command F), and zooms with Command + / Command − / Command 0, Option-scroll or pinch
+
+### Fixed
+
+- The separator buttons in the Metadata Naming window ran past the window's edge
+- The start screen's Audio card cut its file types short
+- Find & Replace buttons ran past the window's edge and were cut to "Replace…"; the replace buttons now sit on their own row
+
 ## 1.4.8
 
 ### Added
