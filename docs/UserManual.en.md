@@ -241,7 +241,7 @@ For clips in **Review** or **Unmatched**:
 
 **Video Controls:**
 - **▶ / ❚❚**: Play/Pause
-- **J K L**: Rewind / Stop / Play (like Final Cut Pro)
+- **J K L**: Rewind / Stop / Play
   - J = Rewind (press repeatedly for faster speed)
   - K = Stop
   - L = Play (press repeatedly for faster speed)
@@ -266,7 +266,7 @@ For clips in **Review** or **Unmatched**:
 - The synced preview in Metadata View zooms the same way
 - The audio waveform works the same way: with the pointer over it, `Cmd++` / `Cmd+-`, `Option + Scroll` or pinch zoom where the pointer is, and `Cmd+0` resets it
 
-**Channel mute and listening volume:** Each WAV channel on the audio waveform has a speaker beside its name. Click it to mute the channel; the mute is saved with the project and exported, turning that channel's role off in Final Cut Pro (in the sync clip or multicam), so what you hear is what the edit gets. Option-click a speaker to hear only that channel; Option-click it again to hear all channels, as in Final Cut Pro. When the export's **Mute Mix** is on, Mix channels start muted. Mute and volume changes can be undone with Command-Z. The vertical fader beside each channel's meter sets its listening volume (−24 to +12 dB) for channels that are too quiet or too loud; drag it (Shift-drag for fine steps) and use the reset button beside the value, or double-click, to return to 0 dB. Volume changes only what you hear in WaveformMatcher and is not exported; while any channel's volume is changed, the waveform shows **Volume: listening only** with a Reset Volume button.
+**Channel mute and listening volume:** Each WAV channel on the audio waveform has a speaker beside its name. Click it to mute the channel; the mute is saved with the project and exported, turning that channel's role off in Final Cut Pro (in the sync clip or multicam), so what you hear is what the edit gets. Option-click a speaker to hear only that channel; Option-click it again to hear all channels. When the export's **Mute Mix** is on, Mix channels start muted. Mute and volume changes can be undone with Command-Z. The vertical fader beside each channel's meter sets its listening volume (−24 to +12 dB) for channels that are too quiet or too loud; drag it (Shift-drag for fine steps) and use the reset button beside the value, or double-click, to return to 0 dB. Volume changes only what you hear in WaveformMatcher and is not exported; while any channel's volume is changed, the waveform shows **Volume: listening only** with a Reset Volume button.
 
 **Video Seek Bar Controls (Zoom):**
 - **Focus video side**, then press:
@@ -539,7 +539,7 @@ Timeline Detail is the clip-by-clip sync editor inside Sync View. It opens by de
 - FCP markers, manual sync points, slate ranges, and slate guides remain visible as review references.
 - Clicking the Video lane focuses video playback; clicking the Audio Match lane focuses audio. The active lane is outlined.
 
-- Skimming, as in Final Cut Pro: while paused, move the pointer over Timeline Detail to see the frame under it (pink skimmer line, `S` or the hand button) and, with audio skimming on (`Shift+S` or the speaker button), hear short snippets. Moving the pointer away goes back to the playhead; clicking moves the playhead. With audio skimming on, the audio waveform in Sync View plays the sound under the pointer too, and while you drag on it. Both switches are also in the View menu (Skimming, Audio Skimming).
+- Skimming: while paused, move the pointer over Timeline Detail to see the frame under it (pink skimmer line, `S` or the hand button) and, with audio skimming on (`Shift+S` or the speaker button), hear short snippets. Moving the pointer away goes back to the playhead; clicking moves the playhead. With audio skimming on, the audio waveform in Sync View plays the sound under the pointer too, and while you drag on it. Both switches are also in the View menu (Skimming, Audio Skimming).
 
 ### 8.2 Adjusting Sync
 
@@ -740,12 +740,12 @@ WaveformMatcher project file used to save work-in-progress for later continuatio
 
 ### 9.4 Video Output on a Second Display
 
-Show the picture full screen on another display, like Final Cut Pro's A/V Output, while you keep working on the main screen.
+Show the picture full screen on another display while you keep working on the main screen.
 
 - **Turn on/off:** **View → Turn Video Output On** (`Cmd+P`), or the display button at the right of the toolbar. The output covers the whole screen, menu bar included.
 - **Choose the display:** **View → Output Display** lists the connected screens. By default the output uses the first screen that is not showing the main window; your choice is remembered and used again when that screen is connected.
 - **What it shows:** the clip in the viewer you are using. In Sync View, the viewer's clip. In Metadata View, a transport bar appears above the status bar and plays the active row on the output: `Space` plays or pauses, `J` / `K` / `L` shuttle and `,` / `.` step a frame, while the arrow keys keep moving between cells. **Open Mini Player** on the bar opens the mini player, which drives the output while it is open. Play, J/K/L, frame steps and clip changes are all controlled from the main window. Sound stays on the Mac's output.
-- **Overlay (burn-in):** **View → Show Overlay on Output** turns it on; **View → Output Overlay…** chooses what it shows, like DaVinci Resolve's Data Burn-In. Pick any of Source Timecode, Audio Timecode, Video and Audio Filename, Scene, Take, Reel, Camera Name, Angle, Note, Sync Status, Speed, Rec FPS and your own text; put each in one of six places (top or bottom; left, center or right), with or without a short label (SRC, SC, TK…), and drag to set their order. Text size, color (white or yellow), background and margin are adjustable, with a live preview. The settings are remembered.
+- **Overlay (burn-in):** **View → Show Overlay on Output** turns it on; **View → Output Overlay…** chooses what it shows. Pick any of Source Timecode, Audio Timecode, Video and Audio Filename, Scene, Take, Reel, Camera Name, Angle, Note, Sync Status, Speed, Rec FPS and your own text; put each in one of six places (top or bottom; left, center or right), with or without a short label (SRC, SC, TK…), and drag to set their order. Text size, color (white or yellow), background and margin are adjustable, with a live preview. The settings are remembered.
 - With one display only, the command is unavailable ("Connect a second display"). If the output display is disconnected, Video Output turns off.
 
 ## 10. Keyboard Shortcuts
