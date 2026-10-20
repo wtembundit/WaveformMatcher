@@ -33,6 +33,7 @@
 
 ### Fixed
 
+- Sync View: changing clip while playing could leave Video Output black and stopped until another clip was chosen
 - Mute Mix did nothing for WAVs whose mix channel is named in capitals, such as MIX-L (common in recorders' iXML when media is opened directly); Mix channels are now found in any case, in the app and in the export
 - A Rec FPS typed in the table (for example 72 for a 300 % clip) was not saved with the project: after reopening it showed the file's own rate (24) while the speed stayed right. It is saved now, and projects saved earlier get it back from their speed when it was set from Rec FPS
 - Multicam: a camera that starts after the first one played out of sync in Final Cut Pro's browser and viewer (by the time it starts late), though it looked right in the angle editor. Its lead-in is now written as a gap, as the audio angle's has been since 1.2.3
