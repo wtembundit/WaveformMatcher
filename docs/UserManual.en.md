@@ -266,6 +266,8 @@ For clips in **Review** or **Unmatched**:
 - The synced preview in Metadata View zooms the same way
 - The audio waveform works the same way: with the pointer over it, `Cmd++` / `Cmd+-`, `Option + Scroll` or pinch zoom where the pointer is, and `Cmd+0` resets it
 
+**Channel mute and listening volume:** Each WAV channel on the audio waveform has a speaker beside its name. Click it to mute the channel; the mute is saved with the project and exported, turning that channel's role off in Final Cut Pro (in the sync clip or multicam), so what you hear is what the edit gets. Option-click a speaker to hear only that channel; Option-click it again to hear all channels, as in Final Cut Pro. When the export's **Mute Mix** is on, Mix channels start muted. Mute and volume changes can be undone with Command-Z. The vertical fader beside each channel's meter sets its listening volume (−24 to +12 dB) for channels that are too quiet or too loud; drag it (Shift-drag for fine steps) and use the reset button beside the value, or double-click, to return to 0 dB. Volume changes only what you hear in WaveformMatcher and is not exported; while any channel's volume is changed, the waveform shows **Volume: listening only** with a Reset Volume button.
+
 **Video Seek Bar Controls (Zoom):**
 - **Focus video side**, then press:
   - `Cmd++` / `Cmd+-`: Zoom seek bar in/out (when Timeline Detail is closed and the pointer is not over the picture)
@@ -387,6 +389,17 @@ Return to the left sidebar, **Output Setup** section:
 - Appears when clip has Record Frame Rate metadata
 - Calculates speed automatically: `Speed = Record FPS ÷ Project FPS`
 - Example: Shot 48fps, timeline 24fps = 200% speed
+
+**Scenes:** Group clips by Scene in the exported event
+- **None**: No scene grouping
+- **Keywords**: Each clip gets a keyword with its Scene, so Final Cut Pro lists a keyword collection per scene
+- **Smart Collections**: One smart collection per scene, matching the Scene field exactly (scene 10 does not also collect 10A)
+- **Keywords + Smart Collections**: Both
+- **Group By** (when Scene holds scene and cut, e.g. S127AC1 = scene 127A, cut 1): **Whole Value** (each value its own group), **Scene Only** (S127AC1 and S127AC2 both go to S127A), or **Scene → Cut** (a folder per scene with its cuts inside). **Rule and Preview…** sets where the cut starts: a cut marker (C: S127AC1 → S127A + C1, S127CV3 → S127 + CV3), a separator (_: E03_09_2 → E03_09 + 2) or a regular expression. It shows the three choices side by side with what a scene from this project becomes in each, and the Scene Keywords folder as Final Cut Pro will show it. Smart collections still match exact Scene values, so scene 127 never collects 127A.
+
+**Synced / Not Synced:** Sync clips and multicam clips carry the keyword **Synced**. Videos without a match and WAVs no video was synced with are still exported, with the keyword **Not Synced**, so nothing from the source is lost. Scene keyword collections go in a **Scene Keywords** folder and smart collections in a **Scene Smart Collections** folder; Synced and Not Synced stay outside them.
+
+**Folder keywords:** Media opened directly gets a keyword with its folder name (camera or sound roll), as Final Cut Pro adds when importing; clips from an FCPXML keep their own keywords.
 
 ### Step 9 — Export and Import to Final Cut Pro
 
@@ -525,6 +538,8 @@ Timeline Detail is the clip-by-clip sync editor inside Sync View. It opens by de
 - Both lanes share one ruler and playhead, so clap transients can be compared visually.
 - FCP markers, manual sync points, slate ranges, and slate guides remain visible as review references.
 - Clicking the Video lane focuses video playback; clicking the Audio Match lane focuses audio. The active lane is outlined.
+
+- Skimming, as in Final Cut Pro: while paused, move the pointer over Timeline Detail to see the frame under it (pink skimmer line, `S` or the hand button) and, with audio skimming on (`Shift+S` or the speaker button), hear short snippets. Moving the pointer away goes back to the playhead; clicking moves the playhead. With audio skimming on, the audio waveform in Sync View plays the sound under the pointer too, and while you drag on it. Both switches are also in the View menu (Skimming, Audio Skimming).
 
 ### 8.2 Adjusting Sync
 
@@ -713,6 +728,7 @@ WaveformMatcher project file used to save work-in-progress for later continuatio
 **Open Project:**
 - **File → Open…** or press `Cmd+O`
 - Or **double-click** `.wmproj` file in Finder
+- **File → Open Recent** lists the last 10 projects opened or saved; **Clear Menu** empties it
 - After app installation, `.wmproj` files are registered with system
 
 **Benefits:**
@@ -722,7 +738,19 @@ WaveformMatcher project file used to save work-in-progress for later continuatio
 
 ---
 
+### 9.4 Video Output on a Second Display
+
+Show the picture full screen on another display, like Final Cut Pro's A/V Output, while you keep working on the main screen.
+
+- **Turn on/off:** **View → Turn Video Output On** (`Cmd+P`), or the display button at the right of the toolbar. The output covers the whole screen, menu bar included.
+- **Choose the display:** **View → Output Display** lists the connected screens. By default the output uses the first screen that is not showing the main window; your choice is remembered and used again when that screen is connected.
+- **What it shows:** the clip in the viewer you are using. In Sync View, the viewer's clip. In Metadata View, a transport bar appears above the status bar and plays the active row on the output: `Space` plays or pauses, `J` / `K` / `L` shuttle and `,` / `.` step a frame, while the arrow keys keep moving between cells. **Open Mini Player** on the bar opens the mini player, which drives the output while it is open. Play, J/K/L, frame steps and clip changes are all controlled from the main window. Sound stays on the Mac's output.
+- **Overlay (burn-in):** **View → Show Overlay on Output** turns it on; **View → Output Overlay…** chooses what it shows, like DaVinci Resolve's Data Burn-In. Pick any of Source Timecode, Audio Timecode, Video and Audio Filename, Scene, Take, Reel, Camera Name, Angle, Note, Sync Status, Speed, Rec FPS and your own text; put each in one of six places (top or bottom; left, center or right), with or without a short label (SRC, SC, TK…), and drag to set their order. Text size, color (white or yellow), background and margin are adjustable, with a live preview. The settings are remembered.
+- With one display only, the command is unavailable ("Connect a second display"). If the output display is disconnected, Video Output turns off.
+
 ## 10. Keyboard Shortcuts
+
+**Customize:** **Help → Keyboard Shortcuts…** lists every command. Click a command's key and press the new one (Esc cancels); the window warns when the key is already used by another command, which then gives it up. Reset puts one command back, Reset All all of them. Commands without a built-in key — Detect Slate, Use Detect Slate, Lock Sync, Auto Lock, Timeline Detail, Send to Final Cut Pro, the output overlay and its settings, Open Mini Player — can be given one. The tables below list the built-in keys.
 
 ### General Operations
 
@@ -732,6 +760,7 @@ WaveformMatcher project file used to save work-in-progress for later continuatio
 | Export FCPXML | `Cmd+E` |
 | Save project | `Cmd+S` |
 | Open project | `Cmd+O` |
+| Video Output on second display | `Cmd+P` |
 | Open Media Files | `Shift+Cmd+I` |
 | Viewer fullscreen | `Shift+Cmd+F` |
 | User Manual | `Shift+Cmd+/` |
@@ -819,6 +848,7 @@ WaveformMatcher project file used to save work-in-progress for later continuatio
 | Nudge Audio Match ten frames | `Shift+,` / `Shift+.` |
 | Timeline zoom in / out | `Cmd++` / `Cmd+-` |
 | Fit timeline | `Cmd+0` |
+| Video skimming / audio skimming | `S` / `Shift+S` |
 | Zoom / pan | `Option + Scroll` or pinch / sideways scroll |
 | Close Timeline Detail | `Esc` |
 
@@ -914,6 +944,6 @@ Timecode is a system for assigning "time addresses" (Hours:Minutes:Seconds:Frame
 
 ---
 
-**WaveformMatcher v1.4.9**
+**WaveformMatcher v1.5.0**
 Built with assistance from Claude Code and Codex
 [Report Issues and Downloads](https://github.com/wtembundit/WaveformMatcher)

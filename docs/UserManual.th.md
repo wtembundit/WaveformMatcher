@@ -266,6 +266,8 @@ WaveformMatcher 1.4.6 เป็นต้นไปเซ็นด้วย Develo
 - ภาพ preview ใน Metadata View zoom ได้แบบเดียวกัน
 - Waveform เสียงใช้แบบเดียวกัน: ชี้เมาส์ที่ waveform แล้วใช้ `Cmd++` / `Cmd+-`, `Option + Scroll` หรือ pinch เพื่อ zoom ตรงตำแหน่งที่ชี้ และ `Cmd+0` เพื่อ reset
 
+**Mute ช่องเสียงและระดับเสียงสำหรับการฟัง:** ทุกช่องของ WAV บน waveform มีรูปลำโพงหน้าชื่อช่อง คลิกเพื่อ mute ช่องนั้น ค่า mute ถูกบันทึกในโปรเจกต์และ export ไปด้วย โดยปิด role ของช่องนั้นใน Final Cut Pro (ทั้ง sync clip และ multicam) สิ่งที่ได้ยินจึงตรงกับที่ได้ในงานตัดต่อ Option-click ที่ลำโพงเพื่อฟังเฉพาะช่องนั้น Option-click ซ้ำที่ช่องเดิมเพื่อฟังทุกช่อง เหมือนใน Final Cut Pro เมื่อเปิด **Mute Mix** ใน export ช่อง Mix จะเริ่มต้นแบบ mute ไว้ การ mute และปรับระดับเสียง undo ได้ด้วย Command-Z fader แนวตั้งข้าง meter ของแต่ละช่องใช้ปรับระดับเสียงสำหรับการฟัง (−24 ถึง +12 dB) ของช่องที่เบาหรือดังเกินไป ลากเพื่อปรับ (กด Shift ค้างเพื่อปรับละเอียด) และกดปุ่มคืนค่าข้างตัวเลข หรือดับเบิลคลิก เพื่อกลับเป็น 0 dB ระดับเสียงเปลี่ยนแค่สิ่งที่ได้ยินใน WaveformMatcher ไม่ถูก export ระหว่างที่มีช่องใดถูกปรับ waveform จะแสดง **ระดับเสียง: สำหรับฟังเท่านั้น** พร้อมปุ่มรีเซ็ตระดับเสียง
+
 **ควบคุม Video Seek Bar (การ zoom):**
 - **Focus ฝั่ง video** แล้วกด:
   - `Cmd++` / `Cmd+-`: Zoom seek bar เข้า/ออก (เมื่อปิด Timeline Detail อยู่ และไม่ได้ชี้เมาส์ที่ภาพ)
@@ -387,6 +389,17 @@ WaveformMatcher 1.4.6 เป็นต้นไปเซ็นด้วย Develo
 - ปรากฏเมื่อคลิปมี metadata ของ Record Frame Rate
 - คำนวณความเร็วอัตโนมัติ: `Speed = Record FPS ÷ Project FPS`
 - ตัวอย่าง: ถ่าย 48fps, timeline 24fps = ความเร็ว 200%
+
+**Scenes:** จัดกลุ่มคลิปตาม Scene ใน event ที่ export
+- **ไม่สร้าง**: ไม่จัดกลุ่มตาม scene
+- **Keywords**: ใส่ keyword ชื่อ Scene ให้ทุกคลิป Final Cut Pro จะแสดง keyword collection แยกตาม scene
+- **Smart Collections**: สร้าง smart collection แยกตาม scene โดยจับคู่ช่อง Scene แบบตรงตัว (scene 10 จะไม่รวม 10A)
+- **Keywords + Smart Collections**: ทั้งสองแบบ
+- **จัดกลุ่มตาม** (เมื่อ Scene มีทั้งซีนและคัท เช่น S127AC1 = ซีน 127A คัท 1): **ทั้งค่า** (แต่ละค่าเป็นกลุ่มของตัวเอง), **เฉพาะซีน** (S127AC1 และ S127AC2 อยู่ใน S127A) หรือ **ซีน → คัท** (โฟลเดอร์ต่อซีนที่มีคัทอยู่ข้างใน) **กฎและตัวอย่าง…** กำหนดจุดเริ่มของคัท: ตัวบอกคัท (C: S127AC1 → S127A + C1, S127CV3 → S127 + CV3), ตัวคั่น (_: E03_09_2 → E03_09 + 2) หรือ regular expression หน้าต่างนี้แสดงทั้งสามแบบเทียบกันว่าซีนจากโปรเจกต์นี้จะกลายเป็นอะไร และแสดงโฟลเดอร์ Scene Keywords ตามที่จะเห็นใน Final Cut Pro Smart collection ยังจับค่า Scene แบบตรงตัว ซีน 127 จึงไม่รวม 127A
+
+**Synced / Not Synced:** sync clip และ multicam clip มี keyword **Synced** ส่วนวิดีโอที่ไม่มีคู่ และไฟล์ WAV ที่ไม่ได้ sync กับวิดีโอใด ยังถูก export โดยใส่ keyword **Not Synced** ไฟล์จากต้นฉบับจึงไม่หาย Keyword ของ scene อยู่ในโฟลเดอร์ **Scene Keywords** และ smart collection อยู่ในโฟลเดอร์ **Scene Smart Collections** ส่วน Synced และ Not Synced อยู่นอกโฟลเดอร์
+
+**Keyword จากโฟลเดอร์:** media ที่เปิดตรงจะได้ keyword ชื่อโฟลเดอร์ (roll กล้องหรือ roll เสียง) แบบที่ Final Cut Pro ใส่ตอน import ส่วนคลิปจาก FCPXML ใช้ keyword เดิมของตัวเอง
 
 ### ขั้นตอนที่ 9 — Export และ Import กลับ Final Cut Pro
 
@@ -525,6 +538,8 @@ Timeline Detail คือหน้าปรับ sync รายคลิปใ�
 - ทั้งสอง lane ใช้ ruler และ playhead เดียวกัน จึงเทียบ clap transient ได้ตรงๆ
 - FCP marker, manual sync point, slate range และ slate guide ยังคงเป็น reference
 - คลิก Video lane เพื่อ focus video; คลิก Audio Match เพื่อ focus audio โดย lane ที่ active จะมีกรอบ
+
+- Skimming แบบ Final Cut Pro: ขณะหยุดเล่น เลื่อนเมาส์บน Timeline Detail เพื่อดูภาพตรงตำแหน่งนั้น (เส้น skimmer สีชมพู, `S` หรือปุ่มรูปมือ) และเมื่อเปิด audio skimming (`Shift+S` หรือปุ่มลำโพง) จะได้ยินเสียงสั้นๆ เลื่อนเมาส์ออกจะกลับไปที่ playhead คลิกเพื่อย้าย playhead เมื่อเปิด audio skimming waveform เสียงใน Sync View ก็เล่นเสียงตรงเมาส์ด้วย รวมถึงตอนลาก ทั้งสองสวิตช์อยู่ในเมนู View ด้วย (Skimming ภาพ, Skimming เสียง)
 
 ### 8.2 การปรับ Sync
 
@@ -714,6 +729,7 @@ Auto Speed จะทำงานเมื่อคลิปมี metadata ข�
 - **File → Open…** หรือกด `Cmd+O`
 - หรือ **ดับเบิลคลิก** ที่ไฟล์ `.wmproj` ใน Finder
 - หลังติดตั้งแอป ไฟล์ `.wmproj` จะถูก register กับระบบ
+- **File → เปิดล่าสุด** แสดง 10 โปรเจกต์ที่เปิดหรือบันทึกล่าสุด **ล้างเมนู** เพื่อลบรายการ
 
 **ประโยชน์:**
 - ทำงานค้างไว้ → เปิดต่อได้ไม่ต้องทำใหม่
@@ -722,7 +738,19 @@ Auto Speed จะทำงานเมื่อคลิปมี metadata ข�
 
 ---
 
+### 9.4 Video Output บนจอที่สอง
+
+แสดงภาพเต็มจอบนจออีกจอหนึ่ง คล้าย A/V Output ของ Final Cut Pro ขณะที่ยังทำงานบนจอหลักได้ตามปกติ
+
+- **เปิด/ปิด:** **View → เปิด Video Output** (`Cmd+P`) หรือปุ่มจอที่ด้านขวาของ toolbar ภาพ output เต็มทั้งจอรวมถึงแถบเมนู
+- **เลือกจอ:** **View → จอสำหรับ Output** แสดงรายชื่อจอที่ต่ออยู่ ค่าเริ่มต้นคือจอแรกที่ไม่ได้แสดงหน้าต่างหลัก แอปจำจอที่เลือกไว้และใช้อีกครั้งเมื่อต่อจอนั้น
+- **สิ่งที่แสดง:** คลิปใน viewer ที่ใช้อยู่ ใน Sync View คือคลิปใน viewer ส่วนใน Metadata View จะมีแถบ transport เหนือ status bar เล่นแถว active บน output: `Space` เล่น/หยุด, `J` / `K` / `L` เดินหน้า-ถอยหลัง และ `,` / `.` ทีละเฟรม โดยปุ่มลูกศรยังใช้เลื่อนระหว่างช่องได้ ปุ่ม **เปิด Mini Player** บนแถบจะเปิด mini player ซึ่งจะควบคุม output ระหว่างที่เปิดอยู่ การเล่น, J/K/L, ทีละเฟรม และการเปลี่ยนคลิปควบคุมจากหน้าต่างหลักทั้งหมด เสียงยังออกที่ output ของ Mac
+- **Overlay (burn-in):** **View → แสดง Overlay บน Output** เปิดใช้ และ **View → Output Overlay…** เลือกสิ่งที่แสดง คล้าย Data Burn-In ของ DaVinci Resolve เลือกได้ทั้ง Source Timecode, Audio Timecode, ชื่อไฟล์วิดีโอและเสียง, Scene, Take, Reel, Camera Name, Angle, Note, สถานะ Sync, Speed, Rec FPS และข้อความเอง กำหนดตำแหน่งได้ 6 จุด (บนหรือล่าง ซ้าย กลาง หรือขวา) พร้อมหรือไม่พร้อมป้ายกำกับสั้น (SRC, SC, TK…) และลากเรียงลำดับได้ ปรับขนาดตัวอักษร สี (ขาวหรือเหลือง) พื้นหลัง และระยะขอบได้ พร้อมภาพตัวอย่าง แอปจำค่าที่ตั้งไว้
+- ถ้ามีจอเดียว คำสั่งนี้จะใช้ไม่ได้ ("ต่อจอที่สองก่อน") และถ้าถอดจอ output ออก Video Output จะปิดเอง
+
 ## 10. Keyboard Shortcuts
+
+**ปรับเอง:** **Help → Keyboard Shortcuts…** แสดงทุกคำสั่ง คลิกปุ่มของคำสั่งแล้วกดปุ่มใหม่ (Esc ยกเลิก) หน้าต่างจะเตือนเมื่อปุ่มนั้นถูกใช้กับคำสั่งอื่นอยู่ ซึ่งคำสั่งนั้นจะเลิกใช้ปุ่มนี้ Reset คืนค่าทีละคำสั่ง Reset All คืนค่าทั้งหมด คำสั่งที่ยังไม่มีปุ่ม — Detect Slate, Use Detect Slate, Lock Sync, Auto Lock, Timeline Detail, Send to Final Cut Pro, overlay ของ output และการตั้งค่า, เปิด Mini Player — กำหนดปุ่มให้ได้ ตารางด้านล่างคือปุ่มเริ่มต้น
 
 ### การทำงานทั่วไป
 
@@ -732,6 +760,7 @@ Auto Speed จะทำงานเมื่อคลิปมี metadata ข�
 | Export FCPXML | `Cmd+E` |
 | Save project | `Cmd+S` |
 | Open project | `Cmd+O` |
+| Video Output บนจอที่สอง | `Cmd+P` |
 | Open Media Files | `Shift+Cmd+I` |
 | Viewer เต็มจอ | `Shift+Cmd+F` |
 | คู่มือการใช้งาน | `Shift+Cmd+/` |
@@ -819,6 +848,7 @@ Auto Speed จะทำงานเมื่อคลิปมี metadata ข�
 | Nudge Audio Match สิบ frame | `Shift+,` / `Shift+.` |
 | Timeline zoom เข้า / ออก | `Cmd++` / `Cmd+-` |
 | Fit timeline | `Cmd+0` |
+| Video skimming / audio skimming | `S` / `Shift+S` |
 | Zoom / เลื่อน | `Option + Scroll` หรือ pinch / scroll แนวนอน |
 | ปิด Timeline Detail | `Esc` |
 
@@ -914,6 +944,6 @@ Timecode คือระบบการกำหนด "ที่อยู่เ
 
 ---
 
-**WaveformMatcher v1.4.9**
+**WaveformMatcher v1.5.0**
 สร้างด้วยความช่วยเหลือของ Claude Code และ Codex
 [รายงานปัญหาและดาวน์โหลด](https://github.com/wtembundit/WaveformMatcher)

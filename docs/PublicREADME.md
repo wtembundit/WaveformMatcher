@@ -17,6 +17,8 @@ macOS app that matches video clips to audio WAV files by comparing waveforms, th
 - **Editorial metadata** — edit Scene, Take, Reel, Camera Name, Angle, Note, Good Take, Speed, Rec FPS, and compatible custom Final Cut Pro metadata
 - **Metadata naming** — name exported clips from metadata fields with source-filename fallback
 - **Sortable clip table** — sort source filenames, scene, speed, or status in either direction
+- **Video Output** — full-screen picture on a second display (Command P), like Final Cut Pro's A/V Output
+- **Scene grouping** — export scene keywords and/or one smart collection per scene
 - **Keyboard shortcuts window** — searchable command reference from the Help menu
 - **Export modes**
   - **Sync Clips** — one `<sync-clip>` per matched pair
@@ -50,6 +52,10 @@ WaveformMatcher 1.4.6 and later is signed with a Developer ID certificate and no
 - [User Manual (English source)](docs/UserManual.en.md)
 - [คู่มือการใช้งาน (ภาษาไทย)](docs/UserManual.th.md)
 - [User Manual PDF](UserManual.pdf)
+
+## 1.5.0 Release Notes
+
+WaveformMatcher 1.5.0 adds Video Output on a second display (Command P) with a choice of display, a customizable burn-in overlay of timecode, filenames, metadata and status, and a transport bar in Metadata View. Channels muted on the waveform are now muted in the export too (Option-click hears one channel, as in Final Cut Pro), with a listening-volume fader per channel. Keyboard shortcuts can be customized, Timeline Detail and the waveform can be skimmed, the export can group clips by Scene with keywords and/or smart collections, and File → Open Recent lists recent projects. Multicam angles that start after the first camera now play in sync in Final Cut Pro's browser and viewer, and two camera angles no longer land a frame apart.
 
 ## 1.4.9 Release Notes
 

@@ -1,5 +1,47 @@
 # Changelog
 
+## 1.5.0
+
+### Added
+
+- Video Output on a second display, like Final Cut Pro's A/V Output: View → Turn Video Output On (Command P) or the display button in the toolbar shows the picture over the whole of another display, menu bar included, while you keep working. Choose the display under View → Output Display (remembered). It turns off if the display is disconnected
+- With Video Output on in Metadata View, a transport bar above the status bar plays the active row on the output display (Space, J/K/L, comma and period for frames; the arrows keep moving between cells). The mini player still opens from the bar and takes over the output while it is open
+- Output overlay, like DaVinci Resolve's Data Burn-In (View → Output Overlay…): source and audio timecode, video and audio filenames, Scene, Take, Reel, Camera Name, Angle, Note, sync status, speed, Rec FPS and custom text, each in one of six places with an optional label, in any order; text size, color, background and margin adjustable with a live preview
+- Customizable keyboard shortcuts: Help → Keyboard Shortcuts… lists every command; click its key and press a new one (Esc cancels), with a warning when the key is already used and Reset / Reset All. Commands that had no key (Detect Slate, Use Detect Slate, Lock Sync, Auto Lock, Timeline Detail, Send to Final Cut Pro, output overlay and its settings, Open Mini Player) can now be given one. Built-in keys keep working unless another command takes them
+- Skimming in Timeline Detail, like Final Cut Pro: while paused, the picture follows the pointer with a pink skimmer line (S) and short sound snippets play as it moves (Shift S); leaving goes back to the playhead. Audio skimming also plays the Sync View waveform under the pointer. View → Skimming and Audio Skimming switch them (S and Shift S show in the menu like other keys; typing in a text field still types the letter)
+- Channel mute on the waveform, linked to the export: a speaker beside each WAV channel's name mutes it in the app and turns its role off in Final Cut Pro (sync clip or multicam). Option-click hears only that channel; Option-click it again hears all, as in Final Cut Pro. Mix channels start muted when the export's Mute Mix is on. Mutes are saved with the project
+- Listening volume per WAV channel (−24 to +12 dB): a vertical fader beside each channel's meter, with a reset button (or double-click; Shift-drag for fine steps). Listening only, not exported
+- Mute and volume changes can be undone and redone
+- Export option Scenes: tag each clip with a keyword for its Scene, add one smart collection per scene (exact Scene match), or both. Scene keyword collections go in a "Scene Keywords" folder and smart collections in a "Scene Smart Collections" folder
+- Scenes → Group By: Whole Value, Scene Only, or Scene → Cut (a folder per scene with its cuts), for Scene values that hold scene and cut (S127AC1). Rule and Preview… sets where the cut starts (cut marker, separator or regular expression) and lists the groups the project would make; smart collections match exact values
+- Sync clips and multicam clips carry a "Synced" keyword, the counterpart of "Not Synced"; both stay outside the scene folders
+- Media opened directly (Open Media Files) gets a keyword with its folder name, the camera or sound roll, as Final Cut Pro adds when it imports media; FCPXML sources keep their own keywords
+
+- File → Open Recent: the last 10 projects opened or saved
+
+### Changed
+
+- WAVs no video was synced with are now exported as audio clips with the "Not Synced" keyword, like unsynced videos, instead of being left out
+- File → Print is gone (nothing to print); Command P is Video Output. The toolbar's full-screen button became the Video Output button; full screen on the same display stays on the viewer's button and Shift Command F
+- Temporary monitor mixes are also cleared when the app quits
+- Multichannel WAVs are ready to hear much sooner: the monitor mix is rendered with vector maths (about 30× faster) and at higher priority
+- Scene Grouping's Rule and Preview shows the three choices side by side, with what a scene from the project becomes in each, and the Scene Keywords folder as Final Cut Pro will show it
+- Projects that have a file (saved or opened once) save themselves every 20 seconds when something changed (File → Auto Save, on by default); the status bar shows when. Saves are written atomically
+- Video Output remembers that it was on and on which display, and comes back at launch when that display is connected
+- Metadata Naming fields can be reordered by dragging their handle, as well as with the arrows
+- Dragging the audio of a locked pair in Timeline Detail shows "Sync is locked" with an Unlock button, instead of silently only moving the playhead
+
+### Fixed
+
+- Multicam: a camera that starts after the first one played out of sync in Final Cut Pro's browser and viewer (by the time it starts late), though it looked right in the angle editor. Its lead-in is now written as a gap, as the audio angle's has been since 1.2.3
+- Multicam: two camera angles could land a frame apart. Each camera was rounded to the WAV on its own; the difference between cameras is now rounded once, and the audio angle keeps a sample-accurate start
+- Media opened directly (Open Media Files): WAV channels were exported as the recorder's input numbers instead of their place in the file, so in Final Cut Pro some roles showed but played no sound (a recorder that skips inputs writes, for example, inputs 3, 4, 5 and 9 as channels 1 to 4). Projects saved earlier are repaired when opened. Audio from an FCPXML source was not affected
+- Camera audio was always declared as 2 channels; a camera file with 3 channels lost its third
+- Sync clips trimmed to the video started a few seconds late in timecode when the camera timecode was near 00:00:00:00 and the WAV started before it
+- High-speed clips (speed above 100 %): Timeline Detail showed only part of the WAV; it now shows the sync clip as Final Cut Pro does, with the video at its retimed length and the full WAV at 100 %
+- High-speed clips: the WAV kept playing after the video reached its end
+- High-speed clips without sync points played the WAV out of step with the exported sync clip
+
 ## 1.4.9
 
 ### Added
