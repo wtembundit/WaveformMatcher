@@ -33,6 +33,7 @@
 
 ### Fixed
 
+- A Rec FPS typed in the table (for example 72 for a 300 % clip) was not saved with the project: after reopening it showed the file's own rate (24) while the speed stayed right. It is saved now, and projects saved earlier get it back from their speed when it was set from Rec FPS
 - Multicam: a camera that starts after the first one played out of sync in Final Cut Pro's browser and viewer (by the time it starts late), though it looked right in the angle editor. Its lead-in is now written as a gap, as the audio angle's has been since 1.2.3
 - Multicam: two camera angles could land a frame apart. Each camera was rounded to the WAV on its own; the difference between cameras is now rounded once, and the audio angle keeps a sample-accurate start
 - Media opened directly (Open Media Files): WAV channels were exported as the recorder's input numbers instead of their place in the file, so in Final Cut Pro some roles showed but played no sound (a recorder that skips inputs writes, for example, inputs 3, 4, 5 and 9 as channels 1 to 4). Projects saved earlier are repaired when opened. Audio from an FCPXML source was not affected
