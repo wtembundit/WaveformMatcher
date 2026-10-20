@@ -3,6 +3,15 @@
     <channel>
         <title>WaveformMatcher</title>
         <item>
+            <title>1.5.0</title>
+            <pubDate>Tue, 20 Oct 2026 13:24:47 +0700</pubDate>
+            <link>https://wtembundit.github.io/WaveformMatcher/</link>
+            <sparkle:version>31</sparkle:version>
+            <sparkle:shortVersionString>1.5.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/wtembundit/WaveformMatcher/releases/download/v1.5.0/WaveformMatcher-1.5.0.dmg" length="18237792" type="application/octet-stream" sparkle:edSignature="kgJGQI5vYoxZO6nGPzXNLVHfU05YMYatnFs4w4IthwCU0a02dJh75i1jMAwIyIrNY6vGcu+UowZcNnEtvBj+BA=="/>
+        </item>
+        <item>
             <title>1.4.9</title>
             <pubDate>Mon, 19 Oct 2026 13:12:53 +0700</pubDate>
             <link>https://wtembundit.github.io/WaveformMatcher/</link>
