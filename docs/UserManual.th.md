@@ -579,7 +579,7 @@ Auto Lock เปิดเป็นค่าเริ่มต้น ปิดเ
   - **Slate เขียนมือ**: โมเดลแยกไม้เปิด/ปิด หาเฟรมแรกที่ไม้ปิดสนิท
 - **Clap ในเสียง**: หา clap ใน WAV ตรงกับเฟรม clap ในภาพ
 
-Detect Slate เป็น guide ควรตรวจผลก่อน lock sync ถ้าเทคนั้นไม่มีเสียง clap ชัดเจน จะ mark เฉพาะ slate ในภาพ
+Detect Slate เป็น guide ควรตรวจผลก่อน lock sync ถ้าเทคนั้นไม่มีเสียง clap ชัดเจน จะ mark เฉพาะ slate ในภาพ viewer จะเปิดที่เฟรมที่ slate คมที่สุดเพื่อให้อ่านได้ ส่วนเส้น guide สีเหลืองยังอยู่ที่ clap ซึ่งใช้ sync (เฟรม clap มักเบลอเพราะไม้ clap กำลังขยับ)
 
 **คลิปที่ยังไม่ได้ sync**
 
@@ -588,7 +588,7 @@ Detect Slate ใช้ได้กับคลิปที่ Waveform หรื
 - **Timecode offset**: ถ้าวิดีโอและ WAV มี timecode ทั้งคู่ แอปใช้ offset นั้นหา clap
 - **กรณีอื่น**: ตัวตรวจจับเสียง clap ในแอปจัดอันดับ clap ใน WAV ใช้อันดับแรก และแสดง 3 อันดับแรกใน **WAV clap candidates** ในเมนู ◎ ให้เลือกตัวอื่นได้
 
-ใน Inspector แถว **FIND** มีปุ่ม Detect Slate และเมนู ◎ (Use Detect Slate, marker pair, WAV clap candidates) ส่วนแถว **LOCK** มี Auto Lock และ Lock Sync
+ใน Inspector แถว **FIND** มีปุ่ม Detect Slate เมื่อพบ slate แล้วจะเปลี่ยนเป็นปุ่มสีเหลือง **ใช้ Detect Slate** พร้อม ↻ สำหรับตรวจใหม่ (ถ้าคลิปยังไม่ได้ sync เมนู ▾ ของ ↻ มีรายการเสียง clap ใน WAV ให้เลือก) หลังกดใช้แล้วจะแสดง **ใช้ Slate อยู่** คลิปที่มี marker pair จาก Final Cut Pro จะมีแถว **MARKER** เพิ่ม: ปุ่มสีม่วง **ใช้ Marker** แล้วเป็น **ใช้ Marker อยู่** และ › เลื่อนไปคู่ถัดไปเมื่อมีหลายคู่ ส่วนแถว **LOCK** มี Auto Lock และ Lock Sync
 
 **หลัง sync**
 
@@ -944,6 +944,6 @@ Timecode คือระบบการกำหนด "ที่อยู่เ
 
 ---
 
-**WaveformMatcher v1.5.0**
+**WaveformMatcher v1.5.1**
 สร้างด้วยความช่วยเหลือของ Claude Code และ Codex
 [รายงานปัญหาและดาวน์โหลด](https://github.com/wtembundit/WaveformMatcher)

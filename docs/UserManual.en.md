@@ -579,7 +579,7 @@ Finds the slate and clap automatically, in about 2 seconds per clip. All models 
   - **Handwritten slates**: an open/closed stick detector finds the first frame the sticks are shut
 - **Audio clap**: The clap in the WAV, taken right at the picture clap
 
-Detect Slate is a guide: review the result before you lock sync. When a take has no audible clap, only the slate in picture is marked.
+Detect Slate is a guide: review the result before you lock sync. When a take has no audible clap, only the slate in picture is marked. The viewer opens on the frame where the slate is sharpest, to read it; the yellow guide stays on the clap, which sync uses (the clap frame is often blurred by the moving sticks).
 
 **Clips that are not synced yet**
 
@@ -588,7 +588,7 @@ Detect Slate also works on clips that Waveform or Timecode could not sync:
 - **Timecode offset**: If the video and WAV both have timecode, the app uses that offset to look for the clap
 - **Otherwise**: A built-in clap sound detector ranks claps in the WAV. The best one is used, and the top three are listed under **WAV clap candidates** in the ◎ menu so you can try another
 
-In the inspector, the **FIND** row holds Detect Slate and the ◎ menu (Use Detect Slate, marker pairs, WAV clap candidates); the **LOCK** row holds Auto Lock and Lock Sync.
+In the inspector, the **FIND** row holds Detect Slate. Once a slate is found it becomes a yellow **Use Detect Slate** button, with ↻ to scan again (when the clip was not synced, ↻'s ▾ menu lists the WAV clap candidates); after you use it, it reads **Slate in Use**. Clips with Final Cut Pro marker pairs get a **MARKER** row: the purple **Use Markers** button, then **Markers in Use**, and › for the next pair when there are several. The **LOCK** row holds Auto Lock and Lock Sync.
 
 **After sync**
 
@@ -944,6 +944,6 @@ Timecode is a system for assigning "time addresses" (Hours:Minutes:Seconds:Frame
 
 ---
 
-**WaveformMatcher v1.5.0**
+**WaveformMatcher v1.5.1**
 Built with assistance from Claude Code and Codex
 [Report Issues and Downloads](https://github.com/wtembundit/WaveformMatcher)

@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.5.1
+
+### Changed
+
+- Sync actions are buttons instead of the ◎ menu: once a slate is found, Detect Slate becomes a yellow Use Detect Slate button (↻ scans again; its ▾ lists WAV clap candidates on unsynced clips), then Slate in Use. Clips with Final Cut Pro marker pairs get a MARKER row with a purple Use Markers button (› for the next pair). Rows appear only when there is something to use
+- Detect Slate shows the slate where it reads best: the viewer opens on the frame where the board is sharpest, while the yellow guide and Use Detect Slate stay on the clap (often blurred by the moving sticks or a focus pull)
+
+### Fixed
+
+- Mute Mix now also changes WAVs whose channels were muted or unmuted by hand: their Mix channels follow the switch, their other channels keep their state
+- Sync View table: column lines run down the rows, text keeps a small gap from them, and headers line up with their cells (they sat a few points to the right). Each column is resized from its left edge, so the divider follows the pointer
+- Space in the empty search field plays instead of typing a space (the field could hold focus unnoticed after a sync, and the list then filtered to nothing). Space while skimming plays picture and sound from the skimmed point; while skimming, the playhead stays where it was until a click
+- Back in Sync View after working in Metadata View, Timeline Detail could be missing until a clip was clicked: it stayed on the clip selected before. It now follows the selected clip
+- Detect Slate could sit at 53 % for about 30 seconds on the first clip: macOS loads its text recognition the first time after a while. It is now loaded in the background at launch, with the slate models. A frame request that stops answering ends after 10 seconds, and a result from Detect Slate after sync also ends the count
+
 ## 1.5.0
 
 ### Added
