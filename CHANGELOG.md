@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.2
+
+### Fixed
+
+- The Final Cut Pro workflow extension stayed on "Loading..." on other Macs: macOS refused to load Final Cut Pro's own framework into it. It now opens
+
 ## 1.5.1
 
 ### Changed

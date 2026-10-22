@@ -3,6 +3,15 @@
     <channel>
         <title>WaveformMatcher</title>
         <item>
+            <title>1.5.2</title>
+            <pubDate>Thu, 22 Oct 2026 10:42:02 +0700</pubDate>
+            <link>https://wtembundit.github.io/WaveformMatcher/</link>
+            <sparkle:version>37</sparkle:version>
+            <sparkle:shortVersionString>1.5.2</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/wtembundit/WaveformMatcher/releases/download/v1.5.2/WaveformMatcher-1.5.2.dmg" length="18363065" type="application/octet-stream" sparkle:edSignature="2V5wm1DtrmVI6+7vgG4rnzfe7JWjxJtyxPIyAfHRlfXaKIoRKi1RWYVeWAYoM0cvdoOewrGiRoPZWPn6C/E/Cw=="/>
+        </item>
+        <item>
             <title>1.5.1</title>
             <pubDate>Wed, 21 Oct 2026 17:07:05 +0700</pubDate>
             <link>https://wtembundit.github.io/WaveformMatcher/</link>
@@ -19,15 +28,6 @@
             <sparkle:shortVersionString>1.5.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <enclosure url="https://github.com/wtembundit/WaveformMatcher/releases/download/v1.5.0/WaveformMatcher-1.5.0.dmg" length="18252434" type="application/octet-stream" sparkle:edSignature="hBAqxiYkbp7nc3IP22jdQixw6FPfygAr1lKICqRNPYc8fRYwsF+RHeDMHUpUApuLoMdWCT3yCeRxGO4zaA7xCw=="/>
-        </item>
-        <item>
-            <title>1.4.9</title>
-            <pubDate>Mon, 19 Oct 2026 13:12:53 +0700</pubDate>
-            <link>https://wtembundit.github.io/WaveformMatcher/</link>
-            <sparkle:version>30</sparkle:version>
-            <sparkle:shortVersionString>1.4.9</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/wtembundit/WaveformMatcher/releases/download/v1.4.9/WaveformMatcher-1.4.9.dmg" length="17278339" type="application/octet-stream" sparkle:edSignature="P2v739ggbGuY9hTymmMNYMFiuxbDUFEDKJ/dscygr3oKgaoaUm1uNXFAg7P3+HTG347v9znRFOzeHYBfpwguBg=="/>
         </item>
     </channel>
 </rss>

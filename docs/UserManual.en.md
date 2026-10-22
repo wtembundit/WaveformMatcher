@@ -135,6 +135,7 @@ Five methods available:
 - Or press `Cmd+I`
 
 #### Method C — Workflow Extension (if installed)
+The extension appears in Final Cut Pro (Window → Extensions) once WaveformMatcher is in the **Applications** folder and has been opened once.
 1. In Final Cut Pro, open WaveformMatcher **Workflow Extension**
 2. Drag **Event** or **Timeline** from Final Cut Pro into the panel
 3. Main app opens automatically with data loaded
@@ -944,6 +945,6 @@ Timecode is a system for assigning "time addresses" (Hours:Minutes:Seconds:Frame
 
 ---
 
-**WaveformMatcher v1.5.1**
+**WaveformMatcher v1.5.2**
 Built with assistance from Claude Code and Codex
 [Report Issues and Downloads](https://github.com/wtembundit/WaveformMatcher)

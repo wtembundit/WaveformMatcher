@@ -135,6 +135,7 @@ WaveformMatcher 1.4.6 เป็นต้นไปเซ็นด้วย Develo
 - หรือกด `Cmd+I`
 
 #### วิธี C — Workflow Extension (ถ้าติดตั้ง)
+Extension จะขึ้นใน Final Cut Pro (Window → Extensions) เมื่อ WaveformMatcher อยู่ในโฟลเดอร์ **Applications** และเปิดแอปแล้วอย่างน้อยหนึ่งครั้ง
 1. ใน Final Cut Pro เปิด **Workflow Extension** ของ WaveformMatcher
 2. ลาก **Event** หรือ **Timeline** จาก Final Cut Pro เข้า panel
 3. แอปหลักจะเปิดขึ้นมาพร้อมข้อมูลอัตโนมัติ
@@ -944,6 +945,6 @@ Timecode คือระบบการกำหนด "ที่อยู่เ
 
 ---
 
-**WaveformMatcher v1.5.1**
+**WaveformMatcher v1.5.2**
 สร้างด้วยความช่วยเหลือของ Claude Code และ Codex
 [รายงานปัญหาและดาวน์โหลด](https://github.com/wtembundit/WaveformMatcher)

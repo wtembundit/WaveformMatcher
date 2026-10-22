@@ -53,6 +53,10 @@ WaveformMatcher 1.4.6 and later is signed with a Developer ID certificate and no
 - [คู่มือการใช้งาน (ภาษาไทย)](docs/UserManual.th.md)
 - [User Manual PDF](UserManual.pdf)
 
+## 1.5.2 Release Notes
+
+WaveformMatcher 1.5.2 fixes the Final Cut Pro workflow extension, which stayed on "Loading..." on other Macs: macOS refused to load Final Cut Pro's own framework into it. The extension appears in Final Cut Pro (Window → Extensions) once WaveformMatcher is in the Applications folder and has been opened once.
+
 ## 1.5.1 Release Notes
 
 WaveformMatcher 1.5.1 makes Detect Slate easier to use: it opens on the frame where the slate is sharpest, its result becomes a yellow Use Detect Slate button, and clips with Final Cut Pro marker pairs get a Use Markers button. Detect Slate no longer seems stuck at 53 % on the first clip. Mute Mix also applies to WAVs whose channels were muted by hand, the Sync View table gets column lines and aligned headers, Space plays after a sync instead of typing into the search field, skimming keeps the playhead in place, and Timeline Detail no longer goes missing after working in Metadata View.
