@@ -4,6 +4,18 @@
         <title>WaveformMatcher</title>
         <item>
             <title>1.5.3</title>
+            <description><![CDATA[
+<style>:root{color-scheme:light dark}body{font:13px -apple-system,sans-serif;margin:8px 12px}h3{font-size:13px;margin:10px 0 4px}ul{margin:0;padding-left:18px}li{margin:3px 0}</style>
+<h3>Added</h3>
+<ul>
+<li>Safety Crop export option for cameras shot wide to stabilize or track: the camera clip inside each sync clip and multicam angle is scaled up by the chosen percentage (10 % → 110 %) while the sync or multicam clip stays at 100 %. Saved with the project</li>
+<li>Wrap Clips Without Sync export option: clips with no audio become sync clips, in Multicam export too, taking the project's frame size, Spatial Conform and Safety Crop like synced clips (useful for clips shot in another aspect ratio, and for high-speed clips to retime and stabilize). Saved with the project</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li>Clips without sync were exported without the Spatial Conform (Fit / Fill) chosen for the synced clips</li>
+</ul>
+            ]]></description>
             <pubDate>Sun, 25 Oct 2026 09:42:56 +0700</pubDate>
             <link>https://wtembundit.github.io/WaveformMatcher/</link>
             <sparkle:version>38</sparkle:version>
