@@ -378,6 +378,13 @@ Extension จะขึ้นใน Final Cut Pro (Window → Extensions) เม�
 - **Fit**: ย่อคลิปให้ fit ใน frame โดยเห็นทั้งภาพ (อาจมีแถบดำ)
 - **Fill**: ขยายให้เต็ม frame (อาจครอปบางส่วนของภาพ)
 
+**Safety Crop:** (สำหรับกล้องที่ถ่ายเผื่อไว้สำหรับ stabilize หรือ tracking)
+- ตั้งเปอร์เซ็นต์ (0 = ปิด สูงสุด 50 %) คลิปกล้อง**ที่อยู่ข้างใน** sync clip และ multicam angle จะถูกขยายตามนั้น (10 % → 110 %) ส่วนตัว sync clip หรือ multicam clip ยังอยู่ที่ 100 % การ stabilize, tracking และการปรับ transform เองจึงเริ่มจากภาพที่ยังไม่ถูกปรับ ค่าจะบันทึกไปกับโปรเจกต์
+
+**ห่อคลิปที่ไม่ได้ sync:**
+- **ปิด**: คลิปที่ไม่มี audio export เป็นคลิปธรรมดา (ได้ Spatial Conform แบบเดียวกัน)
+- **เปิด**: แต่ละคลิปจะเป็น sync clip ทั้งใน export แบบ Sync Clips และ Multicam (sync clip ปรับ speed และ stabilize ได้ง่ายกว่า mc-clip และคลิปพวกนี้มักเป็น hi-speed) sync clip ใช้ขนาดภาพของโปรเจกต์ คลิปที่ถ่ายมาอัตราส่วนอื่นจึงอยู่ใน frame เดียวกับคลิปที่ sync แล้ว และคลิปกล้องข้างในได้ Spatial Conform กับ Safety Crop เหมือนกัน ค่าจะบันทึกไปกับโปรเจกต์
+
 **Trim To Video Area:**
 - **เปิด (แนะนำ)**: Trim output ให้เหลือเฉพาะช่วงที่มีภาพวิดีโอ
 - **ปิด**: เก็บช่วงเต็ม (ช่วงที่มีแต่เสียงจะถูก mark เป็น Rejected)
@@ -945,6 +952,6 @@ Timecode คือระบบการกำหนด "ที่อยู่เ
 
 ---
 
-**WaveformMatcher v1.5.2**
+**WaveformMatcher v1.5.3**
 สร้างด้วยความช่วยเหลือของ Claude Code และ Codex
 [รายงานปัญหาและดาวน์โหลด](https://github.com/wtembundit/WaveformMatcher)

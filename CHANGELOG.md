@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.5.3
+
+### Added
+
+- Safety Crop export option for cameras shot wide to stabilize or track: the camera clip inside each sync clip and multicam angle is scaled up by the chosen percentage (10 % → 110 %) while the sync or multicam clip stays at 100 %. Saved with the project
+- Wrap Clips Without Sync export option: clips with no audio become sync clips, in Multicam export too, taking the project's frame size, Spatial Conform and Safety Crop like synced clips (useful for clips shot in another aspect ratio, and for high-speed clips to retime and stabilize). Saved with the project
+
+### Fixed
+
+- Clips without sync were exported without the Spatial Conform (Fit / Fill) chosen for the synced clips
+
 ## 1.5.2
 
 ### Fixed

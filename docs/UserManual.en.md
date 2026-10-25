@@ -378,6 +378,13 @@ Return to the left sidebar, **Output Setup** section:
 - **Fit**: Scale clip to fit frame showing entire image (may have black bars)
 - **Fill**: Scale to fill frame (may crop image)
 
+**Safety Crop:** (For cameras shot wide to leave room for stabilizing or tracking)
+- Set a percentage (Off at 0, up to 50 %). The camera clip **inside** each sync clip and multicam angle is scaled up by it (10 % → 110 %); the sync clip or multicam clip itself stays at 100 %, so stabilization, tracking and your own transforms on it start from a clean frame. Saved with the project
+
+**Wrap Clips Without Sync:**
+- **Off**: clips with no audio are exported as plain clips (with the same Spatial Conform)
+- **On**: each becomes a sync clip, in Multicam export too (a sync clip is easier to retime and stabilize than an mc-clip, and such clips are often high-speed). The sync clip takes the project's frame size, so a clip shot in another aspect ratio sits in the same frame as the synced clips, and the camera inside gets the same Spatial Conform and Safety Crop. Saved with the project
+
 **Trim To Video Area:**
 - **On (Recommended)**: Trim output to video-only range
 - **Off**: Keep full range (audio-only sections marked as Rejected)
@@ -945,6 +952,6 @@ Timecode is a system for assigning "time addresses" (Hours:Minutes:Seconds:Frame
 
 ---
 
-**WaveformMatcher v1.5.2**
+**WaveformMatcher v1.5.3**
 Built with assistance from Claude Code and Codex
 [Report Issues and Downloads](https://github.com/wtembundit/WaveformMatcher)
