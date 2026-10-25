@@ -4,6 +4,7 @@
         <title>WaveformMatcher</title>
         <item>
             <title>1.5.3</title>
+            <sparkle:fullReleaseNotesLink>https://github.com/wtembundit/WaveformMatcher/releases</sparkle:fullReleaseNotesLink>
             <description><![CDATA[
 <style>:root{color-scheme:light dark}body{font:13px -apple-system,sans-serif;margin:8px 12px}h3{font-size:13px;margin:10px 0 4px}ul{margin:0;padding-left:18px}li{margin:3px 0}</style>
 <h3>Added</h3>
@@ -25,6 +26,7 @@
         </item>
         <item>
             <title>1.5.2</title>
+            <sparkle:fullReleaseNotesLink>https://github.com/wtembundit/WaveformMatcher/releases</sparkle:fullReleaseNotesLink>
             <pubDate>Thu, 22 Oct 2026 10:42:02 +0700</pubDate>
             <link>https://wtembundit.github.io/WaveformMatcher/</link>
             <sparkle:version>37</sparkle:version>
@@ -34,6 +36,7 @@
         </item>
         <item>
             <title>1.5.1</title>
+            <sparkle:fullReleaseNotesLink>https://github.com/wtembundit/WaveformMatcher/releases</sparkle:fullReleaseNotesLink>
             <pubDate>Wed, 21 Oct 2026 17:07:05 +0700</pubDate>
             <link>https://wtembundit.github.io/WaveformMatcher/</link>
             <sparkle:version>36</sparkle:version>
