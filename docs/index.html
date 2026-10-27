@@ -111,6 +111,25 @@
       font-size: 0.78rem;
     }
 
+    /* A quiet text link under the note, not another button. */
+    p.support {
+      margin: 8px 0 0;
+    }
+
+    #support {
+      min-height: 0;
+      padding: 2px 4px;
+      border: 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 500;
+      text-decoration: underline;
+    }
+
+    #support:hover {
+      color: var(--text);
+    }
+
     @media (max-width: 560px) {
       body {
         padding: 16px;
@@ -138,6 +157,7 @@
     </div>
 
     <p class="small">Signed and notarized for macOS</p>
+    <p class="small support"><a id="support" href="https://ko-fi.com/wtembundit">Support WaveformMatcher on Ko-fi</a></p>
   </main>
 
   <script>
@@ -155,19 +175,22 @@
       readyManual: version => `เวอร์ชัน ${version} พร้อมดาวน์โหลด`,
       fallback: "ไม่สามารถเริ่มดาวน์โหลดอัตโนมัติได้ กรุณาเปิดหน้า Release",
       download: "ดาวน์โหลดเวอร์ชันล่าสุด",
-      release: "ดูรายละเอียด Release"
+      release: "ดูรายละเอียด Release",
+      support: "สนับสนุน WaveformMatcher ผ่าน Ko-fi"
     } : {
       finding: "Finding the latest release...",
       ready: version => `Version ${version} is ready. Your download will begin automatically.`,
       readyManual: version => `Version ${version} is ready to download.`,
       fallback: "Automatic download is unavailable. Please open the release page.",
       download: "Download latest version",
-      release: "View release details"
+      release: "View release details",
+      support: "Support WaveformMatcher on Ko-fi"
     };
 
     status.textContent = labels.finding;
     download.textContent = labels.download;
     releasePage.textContent = labels.release;
+    document.getElementById("support").textContent = labels.support;
 
     fetch(apiURL, { headers: { "Accept": "application/vnd.github+json" } })
       .then(response => {

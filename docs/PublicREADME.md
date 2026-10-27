@@ -102,6 +102,10 @@ This public repository hosts WaveformMatcher releases and documentation.
 
 Report issues or request features from the [Issues page](https://github.com/wtembundit/WaveformMatcher/issues).
 
+WaveformMatcher is free. If it saves you time, you can support its development on Ko-fi.
+
+[![Support WaveformMatcher on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/wtembundit)
+
 ## Dependencies
 
 - `ffprobe` — optional fallback for raw-file timecode reads when FCPXML/native data is insufficient
