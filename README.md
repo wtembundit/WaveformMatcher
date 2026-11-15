@@ -53,6 +53,10 @@ WaveformMatcher 1.4.6 and later is signed with a Developer ID certificate and no
 - [คู่มือการใช้งาน (ภาษาไทย)](docs/UserManual.th.md)
 - [User Manual PDF](UserManual.pdf)
 
+## 1.5.4 Release Notes
+
+WaveformMatcher 1.5.4 reads many more camera report PDFs, and faster. Reports with a text layer (offload reports such as ShotPutPro, camera report tables, ZoeLog) are read directly, usually in under a second, and Thai text that macOS-made PDFs used to turn into symbols or strip of tone marks now reads correctly. Scanned and handwritten camera reports, two-camera sheets and cards written in the margin are read by their columns; check handwriting, the roll number above all, before applying. Metadata → Convert PDF Reports to CSV checks reports without footage. The import can fill blank cells from the row above and join a report's shot or cut number to Scene or Take.
+
 ## 1.5.3 Release Notes
 
 WaveformMatcher 1.5.3 adds Safety Crop to the export: the camera inside each sync clip and multicam angle is scaled up by a chosen percentage (10 % → 110 %) while the sync or multicam clip stays at 100 %, leaving room to stabilize or track. Wrap Clips Without Sync turns clips with no audio into sync clips, in Multicam export too, with the project's format, Spatial Conform and Safety Crop. Clips without sync also get the Spatial Conform of the synced clips.

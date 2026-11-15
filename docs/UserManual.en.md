@@ -506,7 +506,7 @@ Choose **Import/Export → Import Metadata…** or press `Option+Cmd+I`.
 Supported input:
 - **CSV**: Reliable interchange and round-trip editing.
 - **XLSX**: Select the worksheet and header row when the workbook contains multiple tables or title rows.
-- **PDF**: Reconstructs table structure locally and uses Apple Vision OCR when the PDF text layer is missing or unreliable.
+- **PDF**: Reads the report locally. PDFs with a text layer are read directly: camera report tables, offload reports that list each file with "Key: Value" details (ShotPutPro and similar), Pomfort clip reports and ZoeLog reports, Thai text included. Scanned or photographed reports, typed or handwritten, are read with Apple Vision OCR by their columns, including two-camera sheets (a clip column per camera, a row per camera clip) and cards written in the margin (A1, A2… used as the roll).
 
 Import workflow:
 1. Select the source file.
@@ -514,10 +514,15 @@ Import workflow:
 3. Choose the matching rule. Prefer exact Filename/Path; structured reports may offer Reel + Clip or token-based matching.
 4. Map each source column to an existing metadata field, Ignore it, or create a custom field.
 5. Check the matched, needs-review, and skipped counts before applying.
+   - **Shot / Cut** (when the report has a shot or cut column): Final Cut Pro has Scene and Take but no Shot. Keep it apart, or join it to the scene (1.11_7, 24C3) or the take (7_1) with `_` `/` `-` `.` `C` `S` or your own separator. Joined to the scene, **Split it back in Scene Grouping** sets the Scene Grouping rule to the same separator.
+   - **Fill blanks**: a blank Lens, FPS, Sync, MOS, T-Stop, Filter or Description cell often means "same as above". Leave blank, fill from above within a shot (a new shot or scene starts again), or fill from above until it changes, for the columns you choose. Slate End, Good Take and notes are never filled.
+   - The preview table shows the rows as they will be imported, with filled cells in blue. Both settings are remembered.
 6. Leave **Overwrite manual edits** off unless the imported report should replace existing manual work.
 7. Apply the import. Missing or ambiguous rows are skipped rather than guessed.
 
-PDF processing is entirely local. OCR results, especially Thai text and reports with merged cells, should be reviewed before export. Review warnings are guidance; they do not modify a clip until **Apply Import** is pressed.
+PDF processing is entirely local. OCR results, especially handwriting (roll numbers above all), Thai text and reports with merged cells, should be reviewed before export. A shot marked with * takes the footnote of the same mark in the report's Note box into its Note. Review warnings are guidance; they do not modify a clip until **Apply Import** is pressed.
+
+**Convert PDF Reports to CSV** (Metadata menu) reads one or more report PDFs the same way, without clips, and saves each table as CSV with a `PDF import summary.csv` (time, pages, rows and import source of each file). Use it to check reports before the footage arrives.
 
 ### 7.7 Export Metadata
 
@@ -952,6 +957,6 @@ Timecode is a system for assigning "time addresses" (Hours:Minutes:Seconds:Frame
 
 ---
 
-**WaveformMatcher v1.5.3**
+**WaveformMatcher v1.5.4**
 Built with assistance from Claude Code and Codex
 [Report Issues and Downloads](https://github.com/wtembundit/WaveformMatcher)

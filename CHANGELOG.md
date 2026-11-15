@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.5.4
+
+### Added
+
+- PDF reports read without OCR when they have a text layer: offload reports that list each file with "Key: Value" details (ShotPutPro), camera report tables, and ZoeLog reports. Most import in under a second instead of several seconds
+- Scanned camera reports drawn as a table are read by their columns, typed or handwritten, including two-camera sheets (a clip, description and lens column per camera), cards written in the margin (A1, A2… as the roll), and forms photographed or scanned under a text layer. Handwriting is read by OCR: check the values, the roll number above all, before applying
+- Metadata → Convert PDF Reports to CSV: reads one or more report PDFs the way Import Metadata does and saves each table as CSV, with a summary of the time, pages and rows of each file. Needs no clips
+- Import Metadata → Fill blanks: a report's blank Lens, FPS, Sync, MOS, T-Stop, Filter or Description cell can take the value above it, within a shot or until it changes, for the columns you choose. A preview table shows the filled cells in blue
+- Import Metadata → Shot / Cut: Final Cut Pro has Scene and Take but no Shot, so a report's shot or cut number can be joined to the scene (1.11_7, 24C3) or the take (7_1) with the separator you choose. Joined to the scene, Scene Grouping is set to split it back
+- A shot marked with * (e.g. *7) takes the footnote of the same mark in the report's Note box into the row's Note
+
+### Fixed
+
+- Thai text in PDFs written by macOS read as symbols where letters combine (ใบเ$%น for ใบเฟิร์น) or lost its tone marks (กลุม for กลุ่ม). It is now read from the fonts embedded in the PDF
+- Clip and take numbers that OCR dropped on scanned reports (lone digits) are read again from the number columns
+
 ## 1.5.3
 
 ### Added

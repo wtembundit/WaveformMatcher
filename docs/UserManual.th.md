@@ -506,7 +506,7 @@ Auto Speed คำนวณ `Rec FPS ÷ Project FPS × 100`
 ไฟล์ที่รองรับ:
 - **CSV**: เหมาะกับ interchange และ round-trip
 - **XLSX**: เลือก worksheet และ header row ได้เมื่อไฟล์มีหลายตารางหรือมีแถวหัวเรื่อง
-- **PDF**: สร้างโครงตารางในเครื่องและใช้ Apple Vision OCR เมื่อ text layer ไม่มีหรือไม่น่าเชื่อถือ
+- **PDF**: อ่าน report ในเครื่อง PDF ที่มี text layer อ่านได้โดยตรง ทั้งตาราง camera report, offload report ที่แสดงแต่ละไฟล์เป็น "Key: Value" (ShotPutPro และแบบเดียวกัน), clip report ของ Pomfort และ ZoeLog รวมภาษาไทย ส่วน report ที่สแกนหรือถ่ายรูปมา ทั้งพิมพ์และลายมือ อ่านด้วย Apple Vision OCR ตามคอลัมน์ รวมฟอร์มสองกล้อง (มีคอลัมน์ clip ของแต่ละกล้อง ได้แถวละคลิปของแต่ละกล้อง) และการ์ดที่เขียนไว้ข้างตาราง (A1, A2… ใช้เป็น roll)
 
 ขั้นตอน:
 1. เลือกไฟล์ source
@@ -514,10 +514,15 @@ Auto Speed คำนวณ `Rec FPS ÷ Project FPS × 100`
 3. เลือก matching rule โดยควรใช้ Filename/Path แบบ exact ก่อน ส่วน report ที่มีโครงสร้างอาจใช้ Reel + Clip หรือ filename token
 4. Map source column ไป field ที่มีอยู่, Ignore หรือสร้าง custom field ใหม่
 5. ตรวจจำนวน matched, needs review และ skipped ก่อน Apply
+   - **Shot / Cut** (เมื่อ report มีคอลัมน์ shot หรือ cut): Final Cut Pro มีช่อง Scene กับ Take แต่ไม่มี Shot เลือกไม่รวม, รวมเข้า Scene (1.11_7, 24C3) หรือรวมเข้า Take (7_1) คั่นด้วย `_` `/` `-` `.` `C` `S` หรือพิมพ์เอง ถ้ารวมเข้า Scene ช่อง **ตั้ง Scene Grouping ให้แยกกลับด้วยตัวคั่นนี้** จะตั้งกฎ Scene Grouping ให้ใช้ตัวคั่นเดียวกัน
+   - **เติมช่องว่าง**: ช่อง Lens, FPS, Sync, MOS, T-Stop, Filter หรือ Description ที่ว่างมักหมายถึง "เหมือนข้างบน" เลือกปล่อยว่าง, เติมจากแถวบนใน shot เดียวกัน (เริ่มใหม่เมื่อขึ้น shot หรือ scene ใหม่) หรือเติมจากแถวบนจนกว่าจะเปลี่ยน และเลือกคอลัมน์ได้ Slate End, Good Take และ note ไม่ถูกเติม
+   - ตารางพรีวิวแสดงแถวตามที่จะ import ช่องที่ถูกเติมเป็นสีฟ้า แอปจำทั้งสองค่าไว้
 6. ปล่อย **Overwrite manual edits** เป็นปิด เว้นแต่ต้องการให้ report ทับงาน manual เดิม
 7. กด Apply Import โดยแถวที่หาไม่เจอหรือกำกวมจะถูกข้าม ไม่เดาสุ่ม
 
-การอ่าน PDF ทำในเครื่องทั้งหมด ควรตรวจผล OCR โดยเฉพาะภาษาไทยและ report ที่มี merged cell ก่อน export คำเตือน review เป็นเพียงตัวช่วยและจะไม่แก้คลิปจนกด **Apply Import**
+การอ่าน PDF ทำในเครื่องทั้งหมด ควรตรวจผล OCR โดยเฉพาะลายมือ (เลข roll เป็นพิเศษ) ภาษาไทย และ report ที่มี merged cell ก่อน export shot ที่มีเครื่องหมาย * จะได้ข้อความเชิงอรรถของเครื่องหมายเดียวกันในช่อง Note ของ report ไปใส่ใน Note คำเตือน review เป็นเพียงตัวช่วยและจะไม่แก้คลิปจนกด **Apply Import**
+
+**แปลง PDF Report เป็น CSV** (เมนู Metadata) อ่าน PDF report หนึ่งหรือหลายไฟล์ด้วยวิธีเดียวกันโดยไม่ต้องมีคลิป แล้วบันทึกแต่ละตารางเป็น CSV พร้อม `PDF import summary.csv` (เวลา จำนวนหน้า จำนวนแถว และวิธีที่อ่านของแต่ละไฟล์) ใช้ตรวจ report ก่อนฟุตเทจมาถึง
 
 ### 7.7 Export Metadata
 
@@ -952,6 +957,6 @@ Timecode คือระบบการกำหนด "ที่อยู่เ
 
 ---
 
-**WaveformMatcher v1.5.3**
+**WaveformMatcher v1.5.4**
 สร้างด้วยความช่วยเหลือของ Claude Code และ Codex
 [รายงานปัญหาและดาวน์โหลด](https://github.com/wtembundit/WaveformMatcher)

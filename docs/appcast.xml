@@ -3,6 +3,32 @@
     <channel>
         <title>WaveformMatcher</title>
         <item>
+            <title>1.5.4</title>
+            <sparkle:fullReleaseNotesLink>https://github.com/wtembundit/WaveformMatcher/releases</sparkle:fullReleaseNotesLink>
+            <pubDate>Sun, 15 Nov 2026 15:51:40 +0700</pubDate>
+            <link>https://wtembundit.github.io/WaveformMatcher/</link>
+            <sparkle:version>39</sparkle:version>
+            <sparkle:shortVersionString>1.5.4</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<style>:root{color-scheme:light dark}body{font:13px -apple-system,sans-serif;margin:8px 12px}h3{font-size:13px;margin:10px 0 4px}ul{margin:0;padding-left:18px}li{margin:3px 0}</style>
+<h3>Added</h3>
+<ul>
+<li>PDF reports read without OCR when they have a text layer: offload reports that list each file with "Key: Value" details (ShotPutPro), camera report tables, and ZoeLog reports. Most import in under a second instead of several seconds</li>
+<li>Scanned camera reports drawn as a table are read by their columns, typed or handwritten, including two-camera sheets (a clip, description and lens column per camera), cards written in the margin (A1, A2… as the roll), and forms photographed or scanned under a text layer. Handwriting is read by OCR: check the values, the roll number above all, before applying</li>
+<li>Metadata → Convert PDF Reports to CSV: reads one or more report PDFs the way Import Metadata does and saves each table as CSV, with a summary of the time, pages and rows of each file. Needs no clips</li>
+<li>Import Metadata → Fill blanks: a report's blank Lens, FPS, Sync, MOS, T-Stop, Filter or Description cell can take the value above it, within a shot or until it changes, for the columns you choose. A preview table shows the filled cells in blue</li>
+<li>Import Metadata → Shot / Cut: Final Cut Pro has Scene and Take but no Shot, so a report's shot or cut number can be joined to the scene (1.11_7, 24C3) or the take (7_1) with the separator you choose. Joined to the scene, Scene Grouping is set to split it back</li>
+<li>A shot marked with * (e.g. *7) takes the footnote of the same mark in the report's Note box into the row's Note</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li>Thai text in PDFs written by macOS read as symbols where letters combine (ใบเ$%น for ใบเฟิร์น) or lost its tone marks (กลุม for กลุ่ม). It is now read from the fonts embedded in the PDF</li>
+<li>Clip and take numbers that OCR dropped on scanned reports (lone digits) are read again from the number columns</li>
+</ul>
+]]></description>
+            <enclosure url="https://github.com/wtembundit/WaveformMatcher/releases/download/v1.5.4/WaveformMatcher-1.5.4.dmg" length="18935441" type="application/octet-stream" sparkle:edSignature="2Sq3YiI/wU3I3gdGE+JbleRD2v/FVHL3ET06MzbIUKwGCBRn0E7CcOp4mjwj3PGu6OTCuHzPWMihc13sjH45CA=="/>
+        </item>
+        <item>
             <title>1.5.3</title>
             <sparkle:fullReleaseNotesLink>https://github.com/wtembundit/WaveformMatcher/releases</sparkle:fullReleaseNotesLink>
             <description><![CDATA[
@@ -33,16 +59,6 @@
             <sparkle:shortVersionString>1.5.2</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <enclosure url="https://github.com/wtembundit/WaveformMatcher/releases/download/v1.5.2/WaveformMatcher-1.5.2.dmg" length="18363065" type="application/octet-stream" sparkle:edSignature="2V5wm1DtrmVI6+7vgG4rnzfe7JWjxJtyxPIyAfHRlfXaKIoRKi1RWYVeWAYoM0cvdoOewrGiRoPZWPn6C/E/Cw=="/>
-        </item>
-        <item>
-            <title>1.5.1</title>
-            <sparkle:fullReleaseNotesLink>https://github.com/wtembundit/WaveformMatcher/releases</sparkle:fullReleaseNotesLink>
-            <pubDate>Wed, 21 Oct 2026 17:07:05 +0700</pubDate>
-            <link>https://wtembundit.github.io/WaveformMatcher/</link>
-            <sparkle:version>36</sparkle:version>
-            <sparkle:shortVersionString>1.5.1</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/wtembundit/WaveformMatcher/releases/download/v1.5.1/WaveformMatcher-1.5.1.dmg" length="18362556" type="application/octet-stream" sparkle:edSignature="Kj8CExpWjKXnQLFzj2TQt9uqZh0m82F46q/u5P/R0jlVFRQ+eQubHYvaCGqft9oMhUQ+5MX7VKaLDHa5o54rCQ=="/>
         </item>
     </channel>
 </rss>
